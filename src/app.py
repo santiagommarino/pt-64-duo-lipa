@@ -61,49 +61,6 @@ app.register_blueprint(api, url_prefix='/api')
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
-
-# stores user in database and sends to login page (logged out)
-@app.route('/signup', methods=['POST'])
-def create_user():
-
-    email = request.json.get('email')
-    password = request.json.get('password')
-
-    if not validate_email(email):
-        return jsonify({'error': 'Invalid email format'}, 400)
-    if not validate_password(password):
-        return jsonify({'error': 'Password does not meet criteria'}, 400)
-
-    existing_user = User.query.filter_by(email=email).first()
-    if existing_user:
-        return jsonify({'error': 'Email already in use'}, 400)
-    
-    hashed_password = generate_password_hash(password)
-    new_user = User(email=email, password=hashed_password, is_active=False)
-
-    db.session.add(new_user)
-    db.session.commit()
-
-    response = {"success": True}
-    return jsonify(response), 200
-
-@app.route('/login', methods=['POST'])
-def authenticate_user():
-    email = request.json.get('email')
-    password = request.json.get('password')
-    user = User.query.filter_by(email=email).first()
-    if not user or not check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid email or password"}), 401
-
-    access_token = create_access_token(identity=user.id)
-    return jsonify(access_token=access_token, success=True), 200
-
-@app.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
-    return jsonify(logged_in_as=current_user_id, user_info=user.serialize()), 200
    
 @app.route('/')
 def sitemap():

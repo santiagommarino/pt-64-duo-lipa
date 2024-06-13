@@ -14,7 +14,7 @@ export const Private = () => {
       }
 
       try {
-        const response = await fetch(process.env.BACKEND_URL + 'protected', {
+        const response = await fetch(process.env.BACKEND_URL + 'protected', { 
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
