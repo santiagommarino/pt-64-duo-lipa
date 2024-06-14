@@ -5,6 +5,7 @@ export const Private = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    
     const fetchUserInfo = async () => {
       const token = sessionStorage.getItem('jwtToken');
 
