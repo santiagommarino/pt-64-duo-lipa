@@ -9,6 +9,7 @@ import { HomeLoggedOff } from "./homeLoggedOff.js";
 import { HomeLoggedIn } from "./homeLoggedIn.js";
 
 export const Home = () => {
+
   const { store, actions } = useContext(Context);
   const [userInfo, setUserInfo] = useState({});
 
