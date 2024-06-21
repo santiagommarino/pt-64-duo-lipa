@@ -1,25 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
-export const HomeLoggedIn = () => {
+export const HomeLoggedIn = ({ logout }) => {
   const { store, actions } = useContext(Context);
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const storedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    setUserInfo(storedUserInfo);
+  },[]);
+
+  function handleLogOut() {
+    logout();
+  }
 
   return (
     <div className="banner text-center mb-4  ">
-      {/*welcome banner atracting user to signup*/}
       <div className="card text-bg-dark">
         <img src={rigoImageUrl} className="card-img" alt="..." />
         <div className="card-img-overlay align-bottom">
-          <h5 className="card-title">Card title</h5>
+          <h5 className="card-title">welcome, {userInfo ? userInfo.username : ''}</h5>
           <p className="card-text">
             This is a wider card with supporting text below as a natural lead-in
             to additional content. This content is a little bit longer.
           </p>
-          <button type="button" class="btn btn-light">
-            Sing up!
-          </button>
+          <button onClick={handleLogOut} type="button" className="btn">Log out</button>
         </div>
       </div>
       <br></br>
@@ -43,29 +50,29 @@ export const HomeLoggedIn = () => {
       </div>
       <div className="container text-center ">
         {/*list website features*/}
-		<div class="row row-cols-3">
-	<div class="col px-1 my-1">
-		<div class="col bg-secondary">
-			1 feature
-		</div>
-	</div>
-	<div class="col px-1 my-1">
-		<div class="col bg-secondary">
-			2 feature
-		</div>
-	</div>
-	<div class="col px-1 my-1">
-		<div class="col bg-secondary">
-			3 feature
-		</div>
-	</div>
-    	<div class="col px-1 my-1">
-		<div class="col bg-secondary">
-			4 feature
-		</div>
-	</div>
-	</div>
-</div>
+        <div className="row row-cols-3">
+          <div className="col px-1 my-1">
+            <div className="col bg-secondary">
+              1 feature
+            </div>
+          </div>
+          <div className="col px-1 my-1">
+            <div className="col bg-secondary">
+              2 feature
+            </div>
+          </div>
+          <div className="col px-1 my-1">
+            <div className="col bg-secondary">
+              3 feature
+            </div>
+          </div>
+          <div className="col px-1 my-1">
+            <div className="col bg-secondary">
+              4 feature
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
@@ -94,7 +101,7 @@ export const HomeLoggedIn = () => {
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">
@@ -122,7 +129,7 @@ export const HomeLoggedIn = () => {
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">
@@ -150,7 +157,7 @@ export const HomeLoggedIn = () => {
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">

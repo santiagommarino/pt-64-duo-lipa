@@ -2,24 +2,37 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { useEffect, useState } from "react";
+import { SignupModal } from "../component/signupModal.js";
+import { LoginModal } from "../component/loginModal.js";
 
-export const HomeLoggedOff = () => {
+export const HomeLoggedOff = ({ login , signup}) => {
   const { store, actions } = useContext(Context);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const handleSignupModal = () => {
+    isSignupModalOpen ? setIsSignupModalOpen(false) : setIsSignupModalOpen(true);
+  };
+
+  const handleLoginModal = () => {
+    isLoginModalOpen ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
+  };
 
   return (
     <div className="text-center mt-5">
-      {/*welcome back user */}
       <div className="card text-bg-dark">
         <img src={rigoImageUrl} className="card-img" alt="..." />
         <div className="card-img-overlay align-bottom">
-          <h5 className="card-title">Card title</h5>
+          <h5 className="card-title">GUEST</h5>
           <p className="card-text">
             This is a wider card with supporting text below as a natural lead-in
             to additional content. This content is a little bit longer.
           </p>
-          <button type="button" class="btn btn-light">
-            Sing up!
-          </button>
+          <button onClick={handleSignupModal} type="button" className="btn">sign up</button>
+          {isSignupModalOpen && <SignupModal closeModal={handleSignupModal} />}
+          <button onClick={handleLoginModal} type="button" className="btn">log in</button>
+          {isLoginModalOpen && <LoginModal closeModal={handleLoginModal} />}
         </div>
       </div>
       <br></br>

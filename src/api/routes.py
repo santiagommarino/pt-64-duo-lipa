@@ -76,9 +76,10 @@ def authenticate_user():
     user_by_email = Users.query.filter_by(email=email).first()
     user_by_username = Users.query.filter_by(username=username).first()
     user = user_by_email if user_by_email else user_by_username
+    print(user.serialize())
     if not user or not check_password_hash(user.password, password):
         return jsonify({"error": "Invalid credentials"}, 400)
-
+    
     access_token = create_access_token(identity=user.id)
     return jsonify(access_token=access_token, success=True), 200
 
@@ -87,4 +88,4 @@ def authenticate_user():
 def protected():
     current_user_id = get_jwt_identity()
     user = Users.query.get(current_user_id)
-    return jsonify(logged_in_as=current_user_id, user_info=user.serialize()), 200
+    return jsonify(user_info=user.serialize()), 200
