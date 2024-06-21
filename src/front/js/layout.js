@@ -4,8 +4,13 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Demo } from "./pages/demo";
+
 import { GameList } from "./pages/gameList"
 import { Single } from "./pages/single";
+
+import { Private } from "./pages/private";
+import { Testhome } from "./pages/testhome";
+
 import injectContext from "./store/appContext";
 import { Home } from "./pages/home";
 
@@ -28,7 +33,8 @@ import { Footer } from "./component/footer";
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Private />} path="/private" />
+                        <Route element={<Testhome />} path="/testhome" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<GameList />} path="/gamelist" />
                     </Routes>
