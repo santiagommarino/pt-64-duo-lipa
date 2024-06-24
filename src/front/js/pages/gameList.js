@@ -69,7 +69,7 @@ export const GameList = () => {
 						<img src={gameImage} className="d-block mx-auto " alt="..." style={{width:'300px', height:'auto'}}/>
 					</div>
 					<div className="carousel-item img-fluid">
-						<img src={shootinGame} className="d-block mx-auto" alt="..." style={{width:'300px', height:'auto'}} />
+						<img src={shootinGame} className="d-bmx-autolock " alt="..." style={{width:'300px', height:'auto'}} />
 					</div>
 					<div className="carousel-item img-fluid">
 						<img src={blocksImage} className="d-block mx-auto" alt="..." style={{width:'300px', height:'auto'}}/>
