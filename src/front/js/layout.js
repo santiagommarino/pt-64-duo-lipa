@@ -6,7 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Demo } from "./pages/demo";
 
 import { GameList } from "./pages/gameList"
-import { Single } from "./pages/single";
+import { ProfilePage } from "./pages/profilePage";
 
 import { Private } from "./pages/private";
 import { Testhome } from "./pages/testhome";
@@ -37,6 +37,7 @@ import { Footer } from "./component/footer";
                         <Route element={<Testhome />} path="/testhome" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<GameList />} path="/gamelist" />
+                        <Route element={<ProfilePage />} path="/profilepage" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
