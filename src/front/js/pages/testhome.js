@@ -34,7 +34,7 @@ export const Testhome = () => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
-          
+
         });
         if (response.ok) {
           const data = await response.json();
@@ -49,7 +49,7 @@ export const Testhome = () => {
     };
     fetchUserInfo();
   }, []);
-  
+
   return (
     <div className="text-center mt-5">
       <h1>Test Home</h1>

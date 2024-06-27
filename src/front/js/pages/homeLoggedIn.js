@@ -10,7 +10,8 @@ export const HomeLoggedIn = ({ logout }) => {
   useEffect(() => {
     const storedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     setUserInfo(storedUserInfo);
-  },[]);
+    actions.handleFetchPopularGames();
+  }, []);
 
   function handleLogOut() {
     logout();
