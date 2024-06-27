@@ -5,10 +5,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: sessionStorage.getItem('jwtToken'),
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
 
 			handleLogin: async (login, password) => {
 				let response = await fetch(process.env.BACKEND_URL + 'login', {
@@ -73,21 +69,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			handleFetchUserInfo: async () => {
+				const token = sessionStorage.getItem('jwtToken');
+				if (!token) {
+					return;
+				}
+				const response = await fetch(process.env.BACKEND_URL + 'protected', {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json'
+					}
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
+				if (response.ok) {
+					const data = await response.json();
+					setStore({ user: data.user_info });
+					sessionStorage.setItem('userInfo', JSON.stringify(data.user_info));
+				} else {
+					throw new Error('Failed to fetch user info');
+				}
+			},	
+			
+			handleFetchPopularGames: async () => {
+				const response = await fetch(process.env.BACKEND_URL + 'fetch_popular_games');
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					setStore({ popularGames: data });
+				} else {
+					throw new Error('Failed to fetch popular games');
+				}
 			}
-		}
+		},
 	};
 };
 

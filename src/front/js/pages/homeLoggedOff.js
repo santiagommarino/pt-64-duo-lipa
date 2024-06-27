@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { SignupModal } from "../component/signupModal.js";
 import { LoginModal } from "../component/loginModal.js";
 
-export const HomeLoggedOff = ({ login , signup}) => {
+export const HomeLoggedOff = ({ login, signup }) => {
   const { store, actions } = useContext(Context);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -18,6 +18,8 @@ export const HomeLoggedOff = ({ login , signup}) => {
   const handleLoginModal = () => {
     isLoginModalOpen ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
   };
+
+  console.log('store.popularGames:' , store.popularGames?.length);
 
   return (
     <div className="text-center mt-5">
@@ -40,38 +42,38 @@ export const HomeLoggedOff = ({ login , signup}) => {
         {/*games your friends have recently reviewed/played*/}
         <div className="col-auto d-flex mx-auto p-4 gap-4 ">
           <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[0].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
           <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[1].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
           <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[2].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
           <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[3].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
         </div>
       </div>
-	  <br></br>
+      <br></br>
       <div className="row gameList row- gx-4">
         {/*new releases*/}
         <div className="col-auto d-flex mx-auto p-4 gap-4 ">
           <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[4].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
           <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[5].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
           <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[6].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
           <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames? store.popularGames[7].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">
@@ -99,7 +101,7 @@ export const HomeLoggedOff = ({ login , signup}) => {
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">
@@ -127,7 +129,7 @@ export const HomeLoggedOff = ({ login , signup}) => {
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">
@@ -155,7 +157,7 @@ export const HomeLoggedOff = ({ login , signup}) => {
           </div>
         </div>
       </div>
-	  <div className="row g-0">
+      <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
           <div className="d-flex">
             <div className="col-md-4">
