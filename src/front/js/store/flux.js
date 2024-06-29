@@ -5,7 +5,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: sessionStorage.getItem('jwtToken'),
 		},
 		actions: {
-
 			handleLogin: async (login, password) => {
 				let response = await fetch(process.env.BACKEND_URL + 'login', {
 					method: 'POST',

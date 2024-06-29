@@ -2,13 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
-import { Demo } from "./pages/demo";
-
 import { GameList } from "./pages/gameList"
-
 import { Private } from "./pages/private";
-import { Testhome } from "./pages/testhome";
+import { GameDetails } from "./pages/gameDetails";
 
 import injectContext from "./store/appContext";
 import { Home } from "./pages/home";
@@ -31,11 +27,10 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
                         <Route element={<Private />} path="/private" />
-                        <Route element={<Testhome />} path="/testhome" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<GameList />} path="/gamelist" />
+                        <Route element={<GameDetails />}  path="/game/:id" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

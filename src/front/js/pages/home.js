@@ -3,8 +3,8 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { useEffect, useState } from "react";
 
-import { HomeLoggedOff } from "./homeLoggedOff.js";
 import { HomeLoggedIn } from "./homeLoggedIn.js";
+import { HomeLoggedOff } from "./homeLoggedOff.js";
 
 export const Home = () => {
 
@@ -13,6 +13,7 @@ export const Home = () => {
 
   useEffect(() => {
     actions.handleFetchUserInfo();
+    actions.handleFetchPopularGames();
   }, []);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export const Home = () => {
 
   return (
     <div className="text-center mt-5">
-      {userInfo ? <HomeLoggedIn logout={() => actions.handleLogOut()} /> : <HomeLoggedOff />}
+      {userInfo ? <HomeLoggedIn logout={() => actions.handleLogOut()} /> : <HomeLoggedOff logout={() => actions.handleLogOut()} />}
     </div>
   );
 }            
