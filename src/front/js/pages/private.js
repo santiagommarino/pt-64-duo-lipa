@@ -5,7 +5,7 @@ export const Private = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    
+
     const fetchUserInfo = async () => {
       const token = sessionStorage.getItem('jwtToken');
 
@@ -15,7 +15,7 @@ export const Private = () => {
       }
 
       try {
-        const response = await fetch(process.env.BACKEND_URL + 'protected', { 
+        const response = await fetch(process.env.BACKEND_URL + 'protected', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
