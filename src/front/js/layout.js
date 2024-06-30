@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { GameList } from "./pages/gameList"
+import { GamePage } from "./pages/gamePage"
 import { ProfilePage } from "./pages/profilePage";
 import { Private } from "./pages/private";
 import { GameDetails } from "./pages/gameDetails";
@@ -31,6 +32,7 @@ const Layout = () => {
                         <Route element={<Private />} path="/private" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<GameList />} path="/gamelist" />
+                        <Route element={<GamePage />} path="/gamepage" />
                         <Route element={<ProfilePage />} path="/profilepage" />
                         <Route element={<GameDetails />}  path="/game/:id" />
                     </Routes>
