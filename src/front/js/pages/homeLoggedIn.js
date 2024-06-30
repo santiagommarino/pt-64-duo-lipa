@@ -1,76 +1,69 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext.js";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import banner from "../../img/stray_banner.jpg"
 import "../../styles/home.css";
+import { useEffect, useState } from "react";
+import { SignupModal } from "../component/signupModal.js";
+import { LoginModal } from "../component/loginModal.js";
 
 export const HomeLoggedIn = ({ logout }) => {
   const { store, actions } = useContext(Context);
   const [userInfo, setUserInfo] = useState(null);
 
+  const popularGameElements = [];
+
   useEffect(() => {
     const storedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     setUserInfo(storedUserInfo);
-    actions.handleFetchPopularGames();
   }, []);
 
   function handleLogOut() {
     logout();
   }
 
+  for (let i = 0; i < 4; i++) {
+    if (store.popularGames && store.popularGames[i]) {
+      popularGameElements.push(
+        <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
+          <a href={`/game/${store.popularGames[i].id}`}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
+          </a>
+        </div>
+      );
+    }
+  }
+
   return (
-    <div className="banner text-center mb-4  ">
+    <div className="text-center mt-5">
       <div className="card text-bg-dark">
-        <img src={rigoImageUrl} className="card-img" alt="..." />
+        <img src={banner} className="card-img" alt="..." />
         <div className="card-img-overlay align-bottom">
-          <h5 className="card-title">welcome, {userInfo ? userInfo.username : ''}</h5>
-          <p className="card-text">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </p>
+          <h1 className="card-title">welcome, {userInfo ? userInfo.username : ''}</h1>
           <button onClick={handleLogOut} type="button" className="btn">Log out</button>
         </div>
       </div>
       <br></br>
       <div className="row gameList row- gx-4">
-        {" "}
-        {/*list of popular games. click to go to game page*/}
         <div className="col-auto d-flex mx-auto p-4 gap-4 ">
-          <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
-          </div>
-          <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
-          </div>
-          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
-          </div>
-          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
-            <img src={rigoImageUrl} className="card-img-top" alt="..." />
-          </div>
+          {popularGameElements}
         </div>
       </div>
-      <div className="container text-center ">
-        {/*list website features*/}
-        <div className="row row-cols-3">
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              1 feature
-            </div>
+      <br></br>
+      <div className="row gameList row- gx-4">
+        {/*new releases*/}
+        <div className="col-auto d-flex mx-auto p-4 gap-4 ">
+          <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[4].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              2 feature
-            </div>
+          <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[5].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              3 feature
-            </div>
+          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[6].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              4 feature
-            </div>
+          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[7].image_id : ''}.jpg`} className="card-img-top" alt="..." />
           </div>
         </div>
       </div>

@@ -122,9 +122,7 @@ def fetch_popular_games():
     'Content-Type': 'application/json',
     'Cookie': '__cf_bm=c8WBpCZJzR1IATEbuvVOIiqxGFyKq3dXS1x.aGDtMKY-1719441107-1.0.1.1-WaI1XBUpcQVKzRCAVUaUkvp75Vd8lM7IXHIur_WDC6jtNg2pk1ZwMt9I_GdHtORSNp0LSe3dLc.hIn2F0seYOQ'
     }
-
     response2 = requests.request("POST", url, headers=headers, data=payload)
-    
     games = []
     for game in response.json():
         for cover in response2.json():
@@ -134,3 +132,16 @@ def fetch_popular_games():
                 break
 
     return jsonify(games), 200
+
+@api.route('/fetch_game/<int:game_id>', methods=['GET'])
+def fetch_game(game_id):
+    url = "https://api.igdb.com/v4/games"
+    payload = "fields name, cover, rating, rating_count, first_release_date, summary, genres, platforms, screenshots;\r\nwhere id = " + str(game_id) + ";"
+    headers = {
+        'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
+        'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
+        'Content-Type': 'application/json',
+        'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    return response.json(), 200

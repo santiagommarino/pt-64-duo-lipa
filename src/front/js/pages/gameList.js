@@ -6,7 +6,6 @@ import gameImage from "../../img/assasinsCreed.png";
 import shootinGame from "../../img/cod.png";
 import blocksImage from "../../img/minecraft.png";
 
-
 export const GameList = () => {
 	const { store, actions } = useContext(Context);
 
