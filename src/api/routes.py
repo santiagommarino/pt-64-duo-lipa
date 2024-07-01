@@ -107,8 +107,8 @@ def fetch_popular_games():
         'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
+
     ids = ""
-    
     for game in response.json():
         ids += str(game['cover']) + ','
     ids = ids[:-1]
@@ -144,4 +144,19 @@ def fetch_game(game_id):
         'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-    return response.json(), 200
+
+    url = "https://api.igdb.com/v4/covers"
+    payload = "fields id, image_id;\r\nwhere id = ("+ str(response.json()[0]['cover']) +");"
+    print(payload)
+    headers = {
+    'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
+    'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
+    'Content-Type': 'application/json',
+    'Cookie': '__cf_bm=c8WBpCZJzR1IATEbuvVOIiqxGFyKq3dXS1x.aGDtMKY-1719441107-1.0.1.1-WaI1XBUpcQVKzRCAVUaUkvp75Vd8lM7IXHIur_WDC6jtNg2pk1ZwMt9I_GdHtORSNp0LSe3dLc.hIn2F0seYOQ'
+    }
+    response2 = requests.request("POST", url, headers=headers, data=payload)
+
+    game = response.json()[0]
+    game['image_id'] = response2.json()[0]['image_id']
+
+    return jsonify(game), 200

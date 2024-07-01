@@ -25,8 +25,9 @@ export const GameDetails = () => {
 
   return (
     <div>
-      <h1>{game[0].name}</h1>
-      <p>{game[0].summary}</p>
+      <h1>{game.name}</h1>
+      <p>{game.summary}</p>
+      <img src={`//images.igdb.com/igdb/image/upload/t_1080p/${game.image_id}.jpg`} className="card-img-top" alt={game.name} />
     </div>
   );
 };
