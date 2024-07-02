@@ -88,8 +88,11 @@ class Game(db.Model):
         favorite = db.Column(db.Boolean, nullable=True)
         review = db.Column(db.String, nullable=True)
 
-        game_id = db.Relationship("Game", backref="Mygames", lazy=True)
-        user_id = db.Relationship("User", backref="Mygames", lazy=True)
+        game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
+        game = db.relationship('Game', backref=db.backref('mygames', lazy=True))
+
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        user = db.relationship('User', backref=db.backref('mygames', lazy=True))
 
         def __repr__(self):
             return f'<Mygames {self.title}>'

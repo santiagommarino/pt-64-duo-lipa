@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../store/appContext';
 
-export function SignupModal({ closeModal }) {
+export function SignupModal({ closeModal, show }) {
+    if(!show) return null;
 
     const {store, actions} = useContext(Context);
     const [username, setUsername] = useState('');
