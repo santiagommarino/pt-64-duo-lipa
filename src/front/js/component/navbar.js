@@ -5,6 +5,7 @@ import { LoginModal } from "./loginModal";
 
 export const Navbar = () => {
 
+
   const [showSingUp, setShowSingUp] = useState(false)
   const [showLogIn, setShowLogIn] = useState(false)
   const handleCloseSingUp = () => setShowSingUp(false)

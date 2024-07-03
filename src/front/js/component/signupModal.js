@@ -7,14 +7,14 @@ import { Context } from '../store/appContext';
 export function SignupModal({ closeModal, show }) {
     if(!show) return null;
 
-    const {store, actions} = useContext(Context);
+    const { store, actions } = useContext(Context);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSignUp() {
         actions.handleSignUp(username, email, password);
-      };
+    };
 
     return (
         <div className="modal">
