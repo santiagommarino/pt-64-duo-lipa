@@ -6,7 +6,7 @@ import schedule
 import time
 import requests
 from flask import Flask, request, jsonify, url_for, Blueprint, send_from_directory
-from api.models import db, Users
+from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -53,16 +53,16 @@ def create_user():
     if not validate_username(username):
         return jsonify({'error': 'Invalid username format'}, 400)
 
-    existing_email = Users.query.filter_by(email=email).first()
+    existing_email = User.query.filter_by(email=email).first()
     if existing_email:
         return jsonify({'error': 'Email already in use'}, 400)
     
-    existing_username = Users.query.filter_by(username=username).first()
+    existing_username = User.query.filter_by(username=username).first()
     if existing_username:
         return jsonify({'error': 'Username already in use'}, 400)
     
     hashed_password = generate_password_hash(password)
-    new_user = Users(email=email, username=username, password=hashed_password, is_active=False)
+    new_user = User(email=email, username=username, password=hashed_password, is_active=False)
 
     db.session.add(new_user)
     db.session.commit()
@@ -77,8 +77,8 @@ def authenticate_user():
     print('email:' + email) if email else print('email: None')
     print('username:' + username) if username else print('username: None')
     password = request.json.get('password')
-    user_by_email = Users.query.filter_by(email=email).first()
-    user_by_username = Users.query.filter_by(username=username).first()
+    user_by_email = User.query.filter_by(email=email).first()
+    user_by_username = User.query.filter_by(username=username).first()
     user = user_by_email if user_by_email else user_by_username
     print(user.serialize())
     if not user or not check_password_hash(user.password, password):
@@ -91,6 +91,7 @@ def authenticate_user():
 @jwt_required()
 def protected():
     current_user_id = get_jwt_identity()
+
     user = Users.query.get(current_user_id)
     return jsonify(user_info=user.serialize()), 200
 
