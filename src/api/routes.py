@@ -136,7 +136,7 @@ def fetch_popular_games():
 @api.route('/fetch_game/<int:game_id>', methods=['GET'])
 def fetch_game(game_id):
     url = "https://api.igdb.com/v4/games"
-    payload = "fields name, cover, rating, rating_count, first_release_date, summary, genres, platforms, screenshots;\r\nwhere id = " + str(game_id) + ";"
+    payload = "fields name, rating, rating_count, first_release_date, summary, genres, platforms, screenshots;\r\nwhere id = " + str(game_id) + ";"
     headers = {
         'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
         'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
@@ -146,17 +146,24 @@ def fetch_game(game_id):
     response = requests.request("POST", url, headers=headers, data=payload)
 
     url = "https://api.igdb.com/v4/covers"
-    payload = "fields id, image_id;\r\nwhere id = ("+ str(response.json()[0]['cover']) +");"
+    payload = "fields image_id;\r\nwhere game = ("+ str(game_id) +");"
+    # headers are the same as above, won't override
     print(payload)
-    headers = {
-    'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
-    'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
-    'Content-Type': 'application/json',
-    'Cookie': '__cf_bm=c8WBpCZJzR1IATEbuvVOIiqxGFyKq3dXS1x.aGDtMKY-1719441107-1.0.1.1-WaI1XBUpcQVKzRCAVUaUkvp75Vd8lM7IXHIur_WDC6jtNg2pk1ZwMt9I_GdHtORSNp0LSe3dLc.hIn2F0seYOQ'
-    }
     response2 = requests.request("POST", url, headers=headers, data=payload)
 
+    url = "https://api.igdb.com/v4/artworks"
+    payload = "fields image_id;\r\nwhere game = "+ str(game_id) +";"
+    # headers are the same as above, won't override
+    response3 = requests.request("POST", url, headers=headers, data=payload)
+
+    url = "https://api.igdb.com/v4/screenshots"
+    payload = "fields image_id;\r\nwhere game = "+ str(game_id) +";"
+    # headers are the same as above, won't override
+    response4 = requests.request("POST", url, headers=headers, data=payload)
+
     game = response.json()[0]
-    game['image_id'] = response2.json()[0]['image_id']
+    game['cover_id'] = response2.json()[0]['image_id']
+    game['artworks'] = response3.json()
+    game['screenshots'] = response4.json()
 
     return jsonify(game), 200

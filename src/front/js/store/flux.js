@@ -98,6 +98,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					throw new Error('Failed to fetch popular games');
 				}
+			},
+
+			handleReview: async (review, rating) => {
+				const token = sessionStorage.getItem('jwtToken');
+				if (!token) {
+					return;
+				}
+				const response = await fetch(process.env.BACKEND_URL + 'review', {
+					method: 'POST',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						review: review,
+						rating: rating
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+				} else {
+					throw new Error('Failed to review game');
+				}
 			}
 		},
 	};
