@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../store/appContext';
 
-export function LoginModal({ closeModal, show }) {
-  if(!show) return null;
+export function LoginModal({ closeModal }) {
   
   const { store, actions } = useContext(Context);
   const [login, setLogin] = useState('');
