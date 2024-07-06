@@ -92,15 +92,14 @@ def authenticate_user():
 def protected():
     current_user_id = get_jwt_identity()
 
-    user = Users.query.get(current_user_id)
+    user = User.query.get(current_user_id)
     return jsonify(user_info=user.serialize()), 200
 
 
 @api.route('/fetch_popular_games', methods=['GET'])
 def fetch_popular_games():
-    print('fetching IGDB')
     url = "https://api.igdb.com/v4/games"
-    payload = "fields name, cover, rating, rating_count, first_release_date;\r\nwhere rating_count > 200 & first_release_date > 1641016861;\r\nsort rating desc;"
+    payload = "fields name, cover, rating, rating_count, first_release_date;\r\nwhere rating_count > 200 & first_release_date > 1641016861;\r\nsort rating desc;\r\nlimit 10;"
     headers = {
         'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
         'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
@@ -108,7 +107,7 @@ def fetch_popular_games():
         'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-
+    print(response.json())
     ids = ""
     for game in response.json():
         ids += str(game['cover']) + ','
@@ -117,13 +116,39 @@ def fetch_popular_games():
     url = "https://api.igdb.com/v4/covers"
     payload = "fields id, image_id;\r\nwhere id = ("+ ids +");"
     print(payload)
-    headers = {
-    'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
-    'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
-    'Content-Type': 'application/json',
-    'Cookie': '__cf_bm=c8WBpCZJzR1IATEbuvVOIiqxGFyKq3dXS1x.aGDtMKY-1719441107-1.0.1.1-WaI1XBUpcQVKzRCAVUaUkvp75Vd8lM7IXHIur_WDC6jtNg2pk1ZwMt9I_GdHtORSNp0LSe3dLc.hIn2F0seYOQ'
-    }
     response2 = requests.request("POST", url, headers=headers, data=payload)
+    games = []
+    for game in response.json():
+        for cover in response2.json():
+            if game['cover'] == cover['id']:
+                game['image_id'] = cover['image_id']
+                games.append(game)
+                break
+
+    return jsonify(games), 200
+
+@api.route('/search', methods=['POST'])
+def search():
+    url = "https://api.igdb.com/v4/games"
+    searchTerm = request.json.get('searchTerm')
+    payload = "fields name, cover, rating, rating_count, first_release_date;\r\nsearch \"" + searchTerm + "\";\r\nwhere cover != null & version_parent = null & parent_game = null;\r\nlimit 50;"
+    headers = {
+        'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
+        'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
+        'Content-Type': 'application/json',
+        'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.json())
+    ids = ""
+    for game in response.json():
+        ids += str(game['cover']) + ','
+    ids = ids[:-1]
+
+    url = "https://api.igdb.com/v4/covers"
+    payload = "fields id, image_id;\r\nwhere id = ("+ ids +");"
+    response2 = requests.request("POST", url, headers=headers, data=payload)
+
     games = []
     for game in response.json():
         for cover in response2.json():

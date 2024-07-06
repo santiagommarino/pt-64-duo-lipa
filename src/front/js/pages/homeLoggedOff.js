@@ -7,9 +7,8 @@ import { SignupModal } from "../component/signupModal.js";
 import { LoginModal } from "../component/loginModal.js";
 
 
-export const HomeLoggedOff = ({ logout }) => {
+export const HomeLoggedOff = ({}) => {
   const { store, actions } = useContext(Context);
-  const [userInfo, setUserInfo] = useState(null);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const popularGameElements = [];

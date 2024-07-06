@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Context } from "../store/appContext";
+import { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { SignupModal } from "./signupModal";
 import { LoginModal } from "./loginModal";
 
+
 export const Navbar = () => {
 
+  const { store, actions } = useContext(Context);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
 
-  const [showSingUp, setShowSingUp] = useState(false)
-  const [showLogIn, setShowLogIn] = useState(false)
-  const handleCloseSingUp = () => setShowSingUp(false)
-  const handleCloseLogIn = () => setShowLogIn(false)
-  const handleShowSingUp = () => setShowSingUp(true)
-  const handleShowLogIn = () => setShowLogIn(true)
+  useEffect(() => {
+    actions.handleFetchUserInfo();
+  }, []);
+
+  useEffect(() => {
+    setUserInfo(sessionStorage.getItem("userInfo"));
+  }, [store.user]);
+
+  const handleSignupModal = () => {
+    isSignupModalOpen ? setIsSignupModalOpen(false) : setIsSignupModalOpen(true);
+  };
+
+  const handleLoginModal = () => {
+    isLoginModalOpen ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
+  };
+
+  const handleLogOut = () => {
+    actions.handleLogOut();
+  }
 
   return (
     <>
@@ -22,36 +42,25 @@ export const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            {userInfo ? 
+            <button onClick={handleLogOut} type="button" className="btn btn-primary ms-2">Log out</button>
+            : 
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <button className="btn btn-primary ms-2" onClick={handleShowLogIn}>Sign in</button>
+                <button className="btn btn-primary ms-2" onClick={handleSignupModal}>Sign up</button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-primary ms-2" onClick={handleShowSingUp}>Sing Up</button>
+                <button className="btn btn-primary ms-2" onClick={handleLoginModal}>Log in</button>
               </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Action</a></li>
-                  <li><a className="dropdown-item" href="#">Another action</a></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-            <div className="d-flex align-items-center">
-              <form className="d-flex" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
-              </form>
-            </div>
+            </ul> 
+            }
+            <Link to="/search" className="btn btn-primary ms-2">Search</Link>
+            <Link to="/" className="btn btn-primary ms-2">Home</Link>
           </div>
         </div>
       </nav>
-      <LoginModal closeModal={handleCloseLogIn} show={showLogIn} />
-      <SignupModal closeModal={handleCloseSingUp} show={showSingUp} />
+      {isLoginModalOpen && <LoginModal closeModal={handleLoginModal} />}
+      {isSignupModalOpen && <SignupModal closeModal={handleSignupModal} />}
     </>
   );
 };
