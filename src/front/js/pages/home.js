@@ -21,7 +21,7 @@ export const Home = () => {
   }, [store.user]);
 
   return (
-    <div className="text-center mt-5">
+    <div className="text-center">
       {userInfo ? <HomeLoggedIn logout={() => actions.handleLogOut()} /> : <HomeLoggedOff logout={() => actions.handleLogOut()} />}
     </div>
   );

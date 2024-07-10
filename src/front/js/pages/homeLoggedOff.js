@@ -3,24 +3,10 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import banner from "../../img/stray_banner.jpg"
-import { SignupModal } from "../component/signupModal.js";
-import { LoginModal } from "../component/loginModal.js";
-
 
 export const HomeLoggedOff = ({ logout }) => {
   const { store, actions } = useContext(Context);
-  const [userInfo, setUserInfo] = useState(null);
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const popularGameElements = [];
-
-  const handleSignupModal = () => {
-    isSignupModalOpen ? setIsSignupModalOpen(false) : setIsSignupModalOpen(true);
-  };
-
-  const handleLoginModal = () => {
-    isLoginModalOpen ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
-  };
 
   for (let i = 0; i < 8; i++) {
     if (store.popularGames && store.popularGames[i]) {
@@ -39,10 +25,6 @@ export const HomeLoggedOff = ({ logout }) => {
       <div className="card text-bg-dark">
         <img src={banner} className="card-img" alt="..." />
         <div className="card-img-overlay align-bottom">
-          <button onClick={handleSignupModal} type="button" className="btn"><b>sign up</b></button>
-          {isSignupModalOpen && <SignupModal closeModal={handleSignupModal} />}
-          <button onClick={handleLoginModal} type="button" className="btn"><b>log in</b></button>
-          {isLoginModalOpen && <LoginModal closeModal={handleLoginModal} />}
         </div>
       </div>
       <br></br>
