@@ -4,6 +4,8 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import banner from "../../img/stray_banner.jpg"
 import "../../styles/home.css";
 import { useEffect, useState } from "react";
+import { SignupModal } from "../component/signupModal.js";
+import { LoginModal } from "../component/loginModal.js";
 
 export const HomeLoggedIn = ({ logout }) => {
   const { store, actions } = useContext(Context);
@@ -20,7 +22,7 @@ export const HomeLoggedIn = ({ logout }) => {
     logout();
   }
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 4; i++) {
     if (store.popularGames && store.popularGames[i]) {
       popularGameElements.push(
         <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
@@ -50,6 +52,20 @@ export const HomeLoggedIn = ({ logout }) => {
       <br></br>
       <div className="row gameList row- gx-4">
         {/*new releases*/}
+        <div className="col-auto d-flex mx-auto p-4 gap-4 ">
+          <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[4].image_id : ''}.jpg`} className="card-img-top" alt="..." />
+          </div>
+          <div className="card mx-auto p-2 " style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[5].image_id : ''}.jpg`} className="card-img-top" alt="..." />
+          </div>
+          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[6].image_id : ''}.jpg`} className="card-img-top" alt="..." />
+          </div>
+          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames ? store.popularGames[7].image_id : ''}.jpg`} className="card-img-top" alt="..." />
+          </div>
+        </div>
       </div>
       <div className="row g-0">
         <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
