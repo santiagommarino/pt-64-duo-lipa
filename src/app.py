@@ -1,4 +1,3 @@
-
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
@@ -9,18 +8,16 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db, User
+from api.models import db, Users
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from werkzeug.security import generate_password_hash, check_password_hash
-import re
-
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
-static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
+static_file_dir = os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 60 * 60 * 24  # 1 day
@@ -29,36 +26,33 @@ jwt = JWTManager(app)
 
 CORS(app)
 
-# database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# database condiguration
+db_url = os.getenv("DATABASE_URL")
+if db_url is not None:
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
+        "postgres://", "postgresql://")
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
-MIGRATE = Migrate(app, db)
-
-
-# validate email
-def validate_email(email):
-    return re.match(r'^[\w\.-]+@[\w\.-]+\.\w{2,}$', email)
-
-# validate password
-def validate_password(password):
-    return (len(password) >= 8 and any(char.isdigit() for char in password)
-            and any(char.isupper() for char in password) and any(char.islower() for char in password))
 
 # add the admin
 setup_admin(app)
 
-# add the commands
+# add the admin
 setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
+
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
-
+   
 @app.route('/')
 def sitemap():
     if ENV == "development":
@@ -66,6 +60,7 @@ def sitemap():
     return send_from_directory(static_file_dir, 'index.html')
 
 # any other endpoint will try to serve it like a static file
+
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
@@ -79,15 +74,3 @@ if __name__ == '__main__':
     print('running main')
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
-
-
-
-
-
-
-
-
-
-
-
-
