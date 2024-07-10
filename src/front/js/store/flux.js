@@ -98,7 +98,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					throw new Error('Failed to fetch popular games');
 				}
-			}
+			},
+
+			handleSearch: async (searchTerm) => {
+				const response = await fetch(process.env.BACKEND_URL + 'search', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						searchTerm: searchTerm
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					setStore({ searchResults: data });
+				} else {
+					throw new Error('Failed to search for games');
+				}
+			},
 		},
 	};
 };
