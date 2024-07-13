@@ -214,3 +214,15 @@ def review_game():
         db.session.add(new_review)
         db.session.commit()
     return jsonify(new_review.serialize()), 200
+
+@api.route('/search_users', methods=['POST'])
+def search_users():
+    search_term = request.json.get('searchTerm')
+    users = Users.query.filter(Users.username.ilike(f'%{search_term}%')).all()
+    return jsonify([user.serialize() for user in users]), 200
+
+@api.route('/fetch_different_user/<username>', methods=['GET'])
+def fetch_different_user(username):
+    user = Users.query.filter_by(username=username).first()
+    user_games = MyGames.query.filter_by(user_id=user.id).all()
+    return jsonify(user=user.serialize(), user_games=[game.serialize() for game in user_games]), 200
