@@ -48,6 +48,7 @@ export const Navbar = () => {
           }
           <Link to="/search" className="btn btn-primary">Search</Link>
           <Link to="/" className="btn btn-primary">Home</Link>
+          <Link to="/private" className="btn btn-primary">Private</Link>
         </div>
       </nav>
       {isLoginModalOpen && <LoginModal closeModal={handleLoginModal} />}

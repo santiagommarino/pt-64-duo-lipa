@@ -1,63 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Private = () => {
-  const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-
-    const fetchUserInfo = async () => {
-      const token = sessionStorage.getItem('jwtToken');
-
-      if (!token) {
-        window.location.href = "/login";
-        return;
-      }
-
-      try {
-        const response = await fetch(process.env.BACKEND_URL + 'protected', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setUserInfo(data.user_info);
-        } else {
-          throw new Error('Failed to fetch user info');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        window.location.href = "/login";
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUserInfo();
-  }, []);
-
-  function handleLogOut() {
-    sessionStorage.setItem('jwtToken', null);
-    window.location.href = "/login";
-  }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!userInfo) {
-    return <div>No user information available</div>;
-  }
+  console.log(store.user);
+  console.log(store.user_games);
 
   return (
     <div>
-      <h1>Welcome, {userInfo.email}</h1>
-      <p>Email: {userInfo.email}</p>
+      <h1>Welcome, {store.user && store.user.username}</h1>
+      <p>Email: {store.user && store.user.email}</p>
       {/* Add more user-specific information here */}
-      <button onClick={handleLogOut} type="button" className="btn">log out</button>
+      {/* Add a list of games the user has reviewed */}
+      <h1>Games you have reviewed:</h1>
+      <div className="row gameList row- gx-4">
+        {store.user_games && store.user_games.map((game, index) => {
+          return (
+            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={game.id}>
+              <a href={`/game/${game.game_id}`}>
+                <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${game.image_id}.jpg`} className="card-img-top" alt={game.name} />
+              </a>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

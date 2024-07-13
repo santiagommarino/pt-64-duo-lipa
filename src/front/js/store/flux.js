@@ -82,8 +82,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					setStore({ user: data.user_info });
-					sessionStorage.setItem('userInfo', JSON.stringify(data.user_info));
+					setStore({ user: data.user, user_games: data.user_games });
+					sessionStorage.setItem('userInfo', JSON.stringify(data.user));
 				} else {
 					throw new Error('Failed to fetch user info');
 				}
@@ -118,6 +118,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error('Failed to search for games');
 				}
 			},
+
+			handleReview: async (game_id, user_id, review, rating, like) => {
+				const response = await fetch(process.env.BACKEND_URL + 'review', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						game_id: game_id,
+						user_id: user_id,
+						review: review,
+						rating: rating,
+						like: like
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					setStore({ review: data });
+				} else {
+					throw new Error('Failed to post review');
+				}
+			}
 		},
 	};
 };
