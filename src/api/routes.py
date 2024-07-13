@@ -195,6 +195,7 @@ def fetch_game(game_id):
 def review_game():
     user_id = request.json.get('user_id')
     game_id = request.json.get('game_id')
+    cover_id = request.json.get('cover_id')
     rating = request.json.get('rating')
     review = request.json.get('review')
     liked = request.json.get('liked')
@@ -204,11 +205,12 @@ def review_game():
         existing_review.rating = rating
         existing_review.review = review
         existing_review.liked = liked
+        existing_review.cover_id = cover_id
         db.session.commit()
         return jsonify(existing_review.serialize()), 200
     else:
 
-        new_review = MyGames(user_id=user_id, game_id=game_id, rating=rating, review=review, liked=liked)
+        new_review = MyGames(user_id=user_id, game_id=game_id, rating=rating, review=review, liked=liked, cover_id=cover_id)
         db.session.add(new_review)
         db.session.commit()
     return jsonify(new_review.serialize()), 200

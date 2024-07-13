@@ -37,6 +37,7 @@ class MyGames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     game_id = db.Column(db.Integer, nullable=False)
+    cover_id = db.Column(db.String(32), nullable=True)
     rating = db.Column(db.Float, nullable=True)
     review = db.Column(db.String(500), nullable=True)
     liked = db.Column(db.Boolean, nullable=True)
@@ -49,6 +50,7 @@ class MyGames(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "game_id": self.game_id,
+            "cover_id": self.cover_id,
             "rating": self.rating,
             "review": self.review,
             "liked": self.liked

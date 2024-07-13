@@ -119,7 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			handleReview: async (game_id, user_id, review, rating, like) => {
+			handleReview: async (game_id, cover_id, user_id, review, rating, like) => {
 				const response = await fetch(process.env.BACKEND_URL + 'review', {
 					method: 'POST',
 					headers: {
@@ -127,6 +127,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 					body: JSON.stringify({
 						game_id: game_id,
+						cover_id: cover_id,
 						user_id: user_id,
 						review: review,
 						rating: rating,

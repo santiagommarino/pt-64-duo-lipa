@@ -11,7 +11,7 @@ export function ReviewModal({ closeModal, game }) {
     const [like, setLike] = useState(false);
 
     async function handleReview() {
-        await actions.handleReview(game.id, store.user.id ,review, rating, like);
+        await actions.handleReview(game.id, game.cover_id, store.user.id ,review, rating, like);
     }
 
     return (
