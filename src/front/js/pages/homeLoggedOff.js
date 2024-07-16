@@ -22,40 +22,40 @@ export const HomeLoggedOff = ({ logout }) => {
 
   return (
     <div className="banner text-center mb-4  ">
-      <div className="card text-bg-dark">
-        <img src={banner} className="card-img" alt="..." />
-        <div className="card-img-overlay align-bottom">
+        <div className="card text-bg-dark">
+          <img src={banner} className="card-img" alt="..." />
+          <div className="card-img-overlay align-bottom">
+          </div>
         </div>
-      </div>
-      <br></br>
-      <div className="row gameList row- gx-4">
-        {" "}
-        {/*list of popular games. click to go to game page*/}
-        <div className="col-auto d-flex mx-auto p-4 gap-4 ">
-          {popularGameElements}
+        <br></br>
+        <div className="row gameList row- gx-4">
+          {" "}
+          {/*list of popular games. click to go to game page*/}
+          <div className="col-auto d-flex mx-auto p-4 gap-4 ">
+            {popularGameElements}
+          </div>
         </div>
-      </div>
-      <div className="container text-center ">
+      <div className="features container text-center ">
         {/*list website features*/}
-        <div className="row row-cols-3">
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              1 feature
+        <div className="featureOne row row-cols-3">
+          <div className="col-6 px-1 my-1">
+            <div className="col bg-secondary pt-2 d-flex justify-content-center">
+              <i class="fa-solid fa-heart fa-2xl p-4 "></i> <p>Express your admiration for the games you love</p>
             </div>
           </div>
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              2 feature
+          <div className=" col-6 px-1 my-1">
+            <div className="featureTwo col bg-secondary pt-2 d-flex justify-content-center">
+               <i className="fa-solid fa-align-left fa-2xl p-4 justify-content-center"></i> <p>Write and share reviews</p>
             </div>
           </div>
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              3 feature
+          <div className="col-6 px-1 my-1">
+            <div className="col bg-secondary pt-2 d-flex  justify-content-center">
+             <i className=" fa-solid fa-star fa-2xl p-4 justify-content-center"></i> <p className="loveFeature d-flex justify-content-center">Rate each game using a five-star rating system</p>
             </div>
           </div>
-          <div className="col px-1 my-1">
-            <div className="col bg-secondary">
-              4 feature
+          <div className="col-6 px-1 my-1">
+            <div className="col bg-secondary pt-2 d-flex justify-content-center">
+            <i class="fa-solid fa-user-plus fa-2xl p-4 justify-content-center"></i><p>Follow your friends and other members</p>
             </div>
           </div>
         </div>

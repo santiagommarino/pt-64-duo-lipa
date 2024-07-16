@@ -3,6 +3,7 @@ import '../../styles/signupModal.css';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 
 export function SignupModal({ closeModal }) {
 
@@ -10,9 +11,12 @@ export function SignupModal({ closeModal }) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     function handleSignUp() {
         actions.handleSignUp(username, email, password);
+        closeModal(false)
+        navigate("/profilepage")
     };
 
     return (

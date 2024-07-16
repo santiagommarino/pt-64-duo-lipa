@@ -35,19 +35,18 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg ps-4">
+      <nav className="navbar navbar-expand-lg ps-4 m-4">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">LOGO</a>
+          <Link to="/" >Logo</Link>
           {userInfo ?
-            <button onClick={handleLogOut} type="button" className="btn btn-primary ms-2">Log out</button>
+            <span onClick={handleLogOut} type="button" className="ms-2">Log out</span>
             :
             <>
-              <button className="btn btn-primary ms-2" onClick={handleSignupModal}>Sign up</button>
-              <button className="btn btn-primary ms-2" onClick={handleLoginModal}>Log in</button>
+              <span className="ms-2 cursor" onClick={handleSignupModal}>Sign up</span>
+              <span className="ms-2 cursor" onClick={handleLoginModal}>Log in</span>
             </>
           }
-          <Link to="/search" className="btn btn-primary">Search</Link>
-          <Link to="/" className="btn btn-primary">Home</Link>
+          <Link to="/search" className="text-decoration-none text-dark">Search</Link>
         </div>
       </nav>
       {isLoginModalOpen && <LoginModal closeModal={handleLoginModal} />}
