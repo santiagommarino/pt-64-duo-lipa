@@ -10,21 +10,23 @@ export const ProfilePage = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="container">
-            <div className="profilePic row">
-                <div className=" col-6">
-                    <div className="card" style={{ width: "18rem", borderRadius: "50%" }}>
+        <div className="container py-2">
+            <div className=" row">
+                <div className=" col-3">
+                    <div className="profilePic picture card " style={{}}>
                         <img src={rigoImageUrl} className="card-img-top rounded-circle" height="200px" alt="..." />
                     </div>
                 </div>
-                <div className=" col-6">
-                    <span className="placeholder col-12 bg-primary text-dark">Name</span>
-                    <span className="placeholder col-12 bg-primary text-dark">Usser Name</span>
-                    <span className="placeholder col-12 bg-primary text-dark">Location</span>
+                <div className=" col-9 ">
+                    <ul className="list-group list-group-flush ">
+                        <li className="userInfo list-group-item " placeholder="Name">hello world</li>
+                        <li className="userInfo list-group-item">A second item</li>
+                        <li className="userInfo list-group-item">A third item</li>
+                    </ul>
                 </div>
             </div>
             <div className="navbar">
-                <nav className="navbar navbar-expand-lg bg-light w-100">
+                <nav className="navbar navbar-expand-lg  w-100">
                     <div className="container-fluid">
                         <a className="navbar-brand" href="#">Games</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,13 +38,10 @@ export const ProfilePage = () => {
                                     <a className="nav-link active" aria-current="page" href="#">Home</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Features</a>
+                                    <a className="nav-link" href="#">Reviews</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Pricing</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link">Disabled</a>
+                                    <a className="nav-link" href="#">Liked</a>
                                 </li>
                             </ul>
                         </div>
@@ -177,7 +176,7 @@ export const ProfilePage = () => {
                     </div>
                 </div>
             </div>
-            <div className="row"> 
+            <div className="row">
                 <ul className="following col-6">
                     <li className="list-group-item">An item</li>
                     <li className="list-group-item">A second item</li>

@@ -35,7 +35,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg ps-4 m-4">
+      <nav className="navbar navbar-expand-lg ps-4 mb-2 ">
         <div className="container-fluid">
           <Link to="/" >Logo</Link>
           {userInfo ?

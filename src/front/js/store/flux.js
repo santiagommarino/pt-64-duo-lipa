@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			message: null,
 			token: sessionStorage.getItem('jwtToken'),
+			popularGames: [],
 		},
 		actions: {
 			handleLogin: async (login, password) => {
@@ -87,13 +88,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					throw new Error('Failed to fetch user info');
 				}
-			},	
-			
+			},
+
 			handleFetchPopularGames: async () => {
 				const response = await fetch(process.env.BACKEND_URL + 'fetch_popular_games');
 				if (response.ok) {
 					const data = await response.json();
-					console.log(data);
 					setStore({ popularGames: data });
 				} else {
 					throw new Error('Failed to fetch popular games');
