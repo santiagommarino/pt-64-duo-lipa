@@ -29,8 +29,6 @@ class Users(db.Model):
             "id": self.id,
             "email": self.email,
             "username": self.username,
-            "followers": [follower.username for follower in self.followers],
-            "followed": [followed.username for followed in self.followed]
             # do not serialize the password, its a security breach
         }
     
