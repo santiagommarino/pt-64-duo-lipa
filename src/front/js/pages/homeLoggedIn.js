@@ -29,19 +29,19 @@ export const HomeLoggedIn = ({ logout }) => {
   }
 
   return (
-    <div className="text-center mt-5">
-      <div className="card text-bg-dark">
-        <img src={banner} className="card-img" alt="..." />
-        <div className="card-img-overlay align-bottom">
-          <h1 className="card-title">welcome, {userInfo ? userInfo.username : ''}</h1>
+    <div className="banner body text-center mt-5">
+        <div className="card text-bg-dark">
+          <img src={banner} className="card-img" alt="..." />
+          <div className="card-img-overlay align-bottom">
+            <h1 className="card-title">welcome, {userInfo ? userInfo.username : ''}</h1>
+          </div>
         </div>
-      </div>
-      <br></br>
-      <div className="row gameList row- gx-4">
-        <div className="col-auto d-flex mx-auto p-4 gap-4 ">
-          {popularGameElements}
+        <br></br>
+        <div className="row gameList row- gx-4">
+          <div className="col-auto d-flex mx-auto p-4 gap-4 ">
+            {popularGameElements}
+          </div>
         </div>
-      </div>
       <br></br>
       <div className="row gameList row- gx-4">
         {/*new releases*/}
