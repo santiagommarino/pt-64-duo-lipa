@@ -38,6 +38,8 @@ export const GameDetails = () => {
     return <div>Loading...</div>;
   }
 
+  console.log(game);
+
   return (
     <div>
       <h1>{game.name}</h1>
@@ -45,7 +47,7 @@ export const GameDetails = () => {
       <h3>IGDB Rating:</h3>
       <p>{game.rating}</p>
       {userInfo && <button onClick={handleReviewModal} type="button" className="btn btn-primary">Review</button>}
-      {isReviewModalOpen && <ReviewModal closeModal={handleReviewModal} game={game.name} />}
+      {isReviewModalOpen && <ReviewModal closeModal={handleReviewModal} game={game} />}
       <br></br>
       <h1>official artworks:</h1>
       {game.artworks && game.artworks.map((artwork, index) => {
