@@ -226,3 +226,35 @@ def fetch_different_user(username):
     user = Users.query.filter_by(username=username).first()
     user_games = MyGames.query.filter_by(user_id=user.id).all()
     return jsonify(user=user.serialize(), user_games=[game.serialize() for game in user_games]), 200
+
+@api.route('/follow', methods=['POST'])
+def follow():
+    follower_id = request.json.get('follower_id')
+    followed_id = request.json.get('followed_id')
+
+    follower = Users.query.get(follower_id)
+    followed = Users.query.get(followed_id)
+
+    if followed in follower.followed:
+        return jsonify({'error': 'Already following this user'}), 400
+
+    follower.followed.append(followed)
+    db.session.commit()
+
+    return jsonify(follower.serialize()), 200
+
+@api.route('/unfollow', methods=['POST'])
+def unfollow():
+    follower_id = request.json.get('follower_id')
+    followed_id = request.json.get('followed_id')
+
+    follower = Users.query.get(follower_id)
+    followed = Users.query.get(followed_id)
+
+    if followed not in follower.followed:
+        return jsonify({'error': 'Not following this user'}), 400
+
+    follower.followed.remove(followed)
+    db.session.commit()
+
+    return jsonify(follower.serialize()), 200

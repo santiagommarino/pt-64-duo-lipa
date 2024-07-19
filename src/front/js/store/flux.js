@@ -1,3 +1,5 @@
+import { act } from "react";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -159,7 +161,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					throw new Error('Failed to search for users');
 				}
-			}
+			},
+			handleFollow: async (follower_id, followed_id) => {
+				const response = await fetch(process.env.BACKEND_URL + 'follow', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						follower_id: follower_id,
+						followed_id: followed_id
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					const actions = getActions();
+					await actions.handleFetchUserInfo();
+				} else {
+					throw new Error('Failed to follow user');
+				}
+			},
+			handleUnfollow: async (follower_id, followed_id) => {
+				const response = await fetch(process.env.BACKEND_URL + 'unfollow', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						follower_id: follower_id,
+						followed_id: followed_id
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					const actions = getActions();
+					await actions.handleFetchUserInfo();
+				} else {
+					throw new Error('Failed to unfollow user');
+				}
+			},
 		},
 	};
 };
