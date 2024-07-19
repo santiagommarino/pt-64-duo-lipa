@@ -41,10 +41,10 @@ export const Private = () => {
       </form>
       {/* Add a list of users */}
       <h1>Search Results:</h1>
-      <div className="row userList row- gx-4">
+      <div className="row userList gx-4">
         {searchResults.map((user, index) => {
           return (
-            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={user.id}>
+            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={index}>
               <p>{user.username}</p>
               <a className="btn btn-primary" href={`/user/${user.username}`}>profile</a>
             </div>
@@ -56,19 +56,19 @@ export const Private = () => {
       <div className="row userList row- gx-4">
         {store.user.followers && store.user.followers.map((follower, index) => {
           return (
-            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={follower.id}>
-              <p>{follower.username}</p>
-              <a className="btn btn-primary" href={`/user/${follower.username}`}>profile</a>
+            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={index}>
+              <p>{follower}</p>
+              <a className="btn btn-primary" href={`/user/${follower}`}>profile</a>
             </div>
           );
         })}
       </div>
-      <h1>Your Following:</h1>
+      <h1>who you follow:</h1>
       <div className="row userList row- gx-4">
-        {store.user.following && store.user.following.map((following, index) => {
+        {store.user.followed && store.user.followed.map((following, index) => {
           return (
-            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={following.id}>
-              <p>{following.username}</p>
+            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={index}>
+              <p>{following}</p>
             </div>
           );
         })}

@@ -22,15 +22,35 @@ export const UserProfile = () => {
             setUserGames(data.user_games);
         }
     }
-    console.log(user);
 
-    if (!user) {
+    const handleFollow = () => {
+        actions.handleFollow(store.user.id, user.id)
+    }
+
+    const handleUnfollow = () => {
+        actions.handleUnfollow(store.user.id, user.id)
+    }
+
+    if (!user || !store.user) {
         return <div>Loading...</div>;
     }
+    console.log(user);
+    console.log(store.user);
+
 
     return (
         <div>
             <h1>{user.username}</h1>
+            {store.user.followed.includes(user.username) ? 
+            <>
+                <p>Following</p> 
+                <button className='btn btn-primary' onClick={handleUnfollow}>Unfollow</button>
+            </>: 
+            <>
+                <p>Not Following</p>
+                <button className='btn btn-primary' onClick={handleFollow}>Follow</button>
+            </>}
+
             <p>{user.email}</p>
             <h1>{user.username}'s reviews:</h1>
             <div className="row gameList row- gx-4">
