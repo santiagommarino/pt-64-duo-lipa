@@ -15,14 +15,12 @@ export function SignupModal({ closeModal }) {
 
     function handleSignUp() {
         actions.handleSignUp(username, email, password);
-        closeModal(false)
-        navigate("/profilepage")
     };
 
     return (
         <div className="modal">
-            <div className="modal-content " style={{ background:"#9FA6B2"}}>
-                <span className="close" onClick={() => closeModal(false)}>&times;</span>
+            <div className="modal-content" style={{ background:"#9FA6B2"}}>
+                <span className="close" onClick={() => closeModal()}>&times;</span>
                 <h2>Sign Up</h2>
                 <form>
                     <label htmlFor="username">Username:</label>

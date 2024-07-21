@@ -111,7 +111,7 @@ export const HomeLoggedOff = ({ logout }) => {
                 <p className="card-text">
                   Very well put together game. Makes it easy for a causal player to just pick this up and play.
                 </p>
-                <p className="card-text">
+                <div className="card-text">
                   <small className="starOne text-body-secondary d-flex ">
                     <p>Review by <b>Erickman25</b></p>
                     <div className="text-warning ps-2">
@@ -122,7 +122,7 @@ export const HomeLoggedOff = ({ logout }) => {
                       <i className="fa-solid fa-star"></i>
                     </div>
                   </small>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export const HomeLoggedOff = ({ logout }) => {
                   ONE OF THE GREATEST ASSASSIN'S CREED GAMES EVER!
                   One of the best games I have ever played (and playing still!). Definitely on my top ten list.
                 </p>
-                <p className="card-text">
+                <div className="card-text">
                   <small className="text-body-secondary d-flex ">
                     <p>Review by <b>Aarom</b></p>
                     <div className="text-warning ps-2">
@@ -156,7 +156,7 @@ export const HomeLoggedOff = ({ logout }) => {
                       <i className="fa-solid fa-star"></i>
                     </div>
                   </small>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@ export const HomeLoggedOff = ({ logout }) => {
                 <p className="card-text">
                   Minecraft is an excellent game for young children to help encourage their creativity and problem solving There are adolescents that frequently swear, and cyberbully too.
                 </p>
-                <p className="card-text">
+                <div className="card-text">
                   <small className="text-body-secondary d-flex">
                     <p>Review by <b>DKaren78</b></p>
                     <div className="text-warning ps-2">
@@ -188,7 +188,7 @@ export const HomeLoggedOff = ({ logout }) => {
                       <i className="fa-solid fa-star-half-stroke"></i>
                     </div>
                   </small>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@ export const HomeLoggedOff = ({ logout }) => {
                   lead-in to additional content. This content is a little bit
                   longer.
                 </p>
-                <p className="card-text">
+                <div className="card-text">
                   <small className="text-body-secondary d-flex ">
                     <p>Review by <b>Smcrypto</b></p>
                     <div className="text-warning ps-2">
@@ -223,7 +223,7 @@ export const HomeLoggedOff = ({ logout }) => {
                       <i className="fa-solid fa-star-half-stroke"></i>
                     </div>
                   </small>
-                </p>
+                </div>
               </div>
             </div>
           </div>

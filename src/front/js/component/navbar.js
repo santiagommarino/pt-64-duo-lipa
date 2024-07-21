@@ -9,7 +9,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     actions.handleFetchUserInfo();
@@ -47,12 +47,22 @@ export const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <span className="nav-link cursor" onClick={handleSignupModal}>Sign up</span>
-              </li>
-              <li className="nav-item">
-                <span className="nav-link cursor" onClick={handleLoginModal}>Log in</span>
-              </li>
+              {userInfo ?
+              <>
+                <li className="nav-item">
+                  <span className="nav-link cursor" onClick={handleLogOut}>Log out</span>
+                </li>
+              </>
+              :
+              <>
+                <li className="nav-item">
+                  <span className="nav-link cursor" onClick={handleSignupModal}>Sign up</span>
+                </li>
+                <li className="nav-item">
+                  <span className="nav-link cursor" onClick={handleLoginModal}>Log in</span>
+                </li>
+              </>
+              }
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Menu

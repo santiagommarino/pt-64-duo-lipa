@@ -68,7 +68,7 @@ export const ProfilePage = () => {
                                     <p className="card-text">
                                         Elden Ring is a masterpiece, having mastered the art of showing without telling.  As a result, it is very different from other open-world games
                                     </p>
-                                    <p className="card-text">
+                                    <div className="card-text">
                                         <small className="starOne text-body-secondary d-flex ">
                                             <p>Review by <b>Jsmith02</b></p>
                                             <div className="text-warning ps-2">
@@ -79,7 +79,7 @@ export const ProfilePage = () => {
                                                 <i className="fa-solid fa-star-half-stroke"></i>
                                             </div>
                                         </small>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@ export const ProfilePage = () => {
                                     <p className="card-text">
                                         The game is amazing the storyline is mind blowing so freaking good man I played it about three times and soon enough I’m going to play it again it’s just that good for me personally.
                                     </p>
-                                    <p className="card-text">
+                                    <div className="card-text">
                                         <small className="text-body-secondary d-flex ">
                                             <p>Review by <b>Luckyhusky</b></p>
                                             <div className="text-warning ps-2">
@@ -111,7 +111,7 @@ export const ProfilePage = () => {
                                                 <i className="fa-solid fa-star"></i>
                                             </div>
                                         </small>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -133,14 +133,14 @@ export const ProfilePage = () => {
                                     <p className="card-text">
                                         I wish I could unplay this game and burn its existence from my mind. I gave it 1 star cause I can't give it zero
                                     </p>
-                                    <p className="card-text">
+                                    <div className="card-text">
                                         <small className="text-body-secondary d-flex">
                                             <p>Review by <b>Incog nito</b></p>
                                             <div className="text-warning ps-2">
                                                 <i className="fa-solid fa-star"></i>
                                             </div>
                                         </small>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@ export const ProfilePage = () => {
                                     <p className="card-text">
                                         The gunplay is as fun if not better than payday 2, though some guns like the zip commando and compact 7 feel like underpowered pea shooters.
                                     </p>
-                                    <p className="card-text">
+                                    <div className="card-text">
                                         <small className="text-body-secondary d-flex ">
                                             <p>Review by <b>Sankipanki</b></p>
                                             <div className="text-warning ps-2">
@@ -170,7 +170,7 @@ export const ProfilePage = () => {
                                                 <i className="fa-solid fa-star-half-stroke"></i>
                                             </div>
                                         </small>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

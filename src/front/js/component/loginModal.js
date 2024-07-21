@@ -3,25 +3,22 @@ import '../../styles/loginModal.css';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../store/appContext';
-import { useNavigate } from 'react-router-dom';
 
 export function LoginModal({ closeModal }) {
   const { store, actions } = useContext(Context);
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate()
+
   async function handleLogin() {
     await actions.handleLogin(login, password);
-    closeModal(false)
-    navigate("/profilepage")
   }
 
   return (
     <div className="modal">
       <div className="modal-content" style={{ background:"#9FA6B2"}} >
-        <span className="close" onClick={() => closeModal(false)}>&times;</span>
+        <span className="close" onClick={() => closeModal()}>&times;</span>
         <h2>Login</h2>
-        <form >
+        <form>
           <label  htmlFor="username">Username or Email:</label>
           <input type="text" className="form-control border border-0" style={{ background:"#54B4D3"}} placeholder="Username or Email" aria-label="Username" aria-describedby="basic-addon1"
             onChange={(e) => setLogin(e.target.value)} value={login} />

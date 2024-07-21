@@ -1,9 +1,10 @@
+import { act } from "react";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
 			token: sessionStorage.getItem('jwtToken'),
-			popularGames: [],
 		},
 		actions: {
 			handleLogin: async (login, password) => {
@@ -83,17 +84,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					setStore({ user: data.user_info });
-					sessionStorage.setItem('userInfo', JSON.stringify(data.user_info));
+					setStore({ user: data.user, user_games: data.user_games });
+					sessionStorage.setItem('userInfo', JSON.stringify(data.user));
 				} else {
 					throw new Error('Failed to fetch user info');
 				}
-			},
-
+			},	
+			
 			handleFetchPopularGames: async () => {
 				const response = await fetch(process.env.BACKEND_URL + 'fetch_popular_games');
 				if (response.ok) {
 					const data = await response.json();
+					console.log(data);
 					setStore({ popularGames: data });
 				} else {
 					throw new Error('Failed to fetch popular games');
@@ -116,6 +118,86 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ searchResults: data });
 				} else {
 					throw new Error('Failed to search for games');
+				}
+			},
+
+			handleReview: async (game_id, cover_id, user_id, review, rating, like) => {
+				const response = await fetch(process.env.BACKEND_URL + 'review', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						game_id: game_id,
+						cover_id: cover_id,
+						user_id: user_id,
+						review: review,
+						rating: rating,
+						like: like
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					setStore({ review: data });
+				} else {
+					throw new Error('Failed to post review');
+				}
+			},
+			searchUsers: async (searchTerm) => {
+				const response = await fetch(process.env.BACKEND_URL + 'search_users', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						searchTerm: searchTerm
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					setStore({ searchResults: data });
+				} else {
+					throw new Error('Failed to search for users');
+				}
+			},
+			handleFollow: async (follower_id, followed_id) => {
+				const response = await fetch(process.env.BACKEND_URL + 'follow', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						follower_id: follower_id,
+						followed_id: followed_id
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					const actions = getActions();
+					await actions.handleFetchUserInfo();
+				} else {
+					throw new Error('Failed to follow user');
+				}
+			},
+			handleUnfollow: async (follower_id, followed_id) => {
+				const response = await fetch(process.env.BACKEND_URL + 'unfollow', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						follower_id: follower_id,
+						followed_id: followed_id
+					})
+				});
+				if (response.ok) {
+					const data = await response.json();
+					const actions = getActions();
+					await actions.handleFetchUserInfo();
+				} else {
+					throw new Error('Failed to unfollow user');
 				}
 			},
 		},
