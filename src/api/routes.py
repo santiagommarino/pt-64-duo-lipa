@@ -1,7 +1,3 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
-
 import schedule
 import time
 import requests
@@ -74,8 +70,6 @@ def create_user():
 def authenticate_user():
     email = request.json.get('email')
     username = request.json.get('username')
-    print('email:' + email) if email else print('email: None')
-    print('username:' + username) if username else print('username: None')
     password = request.json.get('password')
     user_by_email = Users.query.filter_by(email=email).first()
     user_by_username = Users.query.filter_by(username=username).first()

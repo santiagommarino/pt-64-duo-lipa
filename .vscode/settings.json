@@ -6,16 +6,13 @@
     },
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
-
     },
     "eslint.options": {
-
     },
     "eslint.trace.server": "off",
     "eslint.workingDirectories": [
-
     ],
     "eslint.validate": [
-        
+
     ]
 }

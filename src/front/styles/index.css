@@ -1,8 +1,81 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-.site-wide-margin{
-    margin-left: 18%;
-    margin-right: 18%;
+.cursor {
+    cursor: pointer;
+}
+
+nav {
+    background: rgb(245, 195, 68);
+    box-shadow: 0px 7px 6px rgb(46, 45, 45);
+    text-shadow: 5px 5px 9px rgb(126, 123, 126);
+    color: #342f34;
+}
+
+body {
+    font-family: "Space Mono";
+    width: 100%;
+    height: 100%;
+    background: rgb(85, 83, 93);
+    margin-bottom: 10px;
+}
+
+.features {
+    background: radial-gradient(rgb(71, 70, 70) 0%, rgb(30, 30, 38) 100%);
+    box-shadow: 0px 0px 90px 13px rgb(39, 39, 40);
+}
+
+.reviewsPic,
+.reviewsPicCod,
+.reviewsPicStr {
+    border: 4px solid rgb(245, 195, 68);
+    height: 190px;
+}
+
+.profilePic {
+    border-radius: 100px;
+    height: 120px;
+    width: 120px;
+}
+
+.profileList,
+.userInfo {
+    background-color: rgb(85, 83, 93);
+    color: white;
+}
+
+.btnModal {
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.3s;
+    transition-property: box-shadow, transform;
+    border: none;
+}
+
+.btnModal:hover,
+.btnModal:focus,
+.btnModal:active {
+    box-shadow: 0 0 20px rgb(85, 83, 93);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.follower {
+    background: rgb(245, 195, 68);
+    box-shadow: 32px 28px 48px 8px rgb(39, 39, 40);
+}
+
+.following {
+    background: rgb(245, 195, 68);
+    box-shadow: -32px 28px 48px 8px rgb(39, 39, 40);
+}
+
+/* .list {
+    background: rgb(245, 195, 68);
+} */
+
+.search {
+    background: wheat;
+    /* height: 100px;
+    width: 100px; */
+    /* background-image: url(./img/library.jpeg); */
 }

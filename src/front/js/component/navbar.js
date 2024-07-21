@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import { SignupModal } from "./signupModal";
 import { LoginModal } from "./loginModal";
 
-
 export const Navbar = () => {
-
   const { store, actions } = useContext(Context);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -18,37 +16,71 @@ export const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    setUserInfo(sessionStorage.getItem("userInfo"));
+    const user = sessionStorage.getItem("userInfo");
+    if (user) {
+      setUserInfo(JSON.parse(user));
+    } else {
+      setUserInfo(null);
+    }
   }, [store.user]);
 
   const handleSignupModal = () => {
-    isSignupModalOpen ? setIsSignupModalOpen(false) : setIsSignupModalOpen(true);
+    setIsSignupModalOpen(!isSignupModalOpen);
   };
 
   const handleLoginModal = () => {
-    isLoginModalOpen ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
+    setIsLoginModalOpen(!isLoginModalOpen);
   };
 
   const handleLogOut = () => {
     actions.handleLogOut();
-  }
+    setUserInfo(null);
+  };
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg ps-4">
+      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">LOGO</a>
-          {userInfo ?
-            <button onClick={handleLogOut} type="button" className="btn btn-primary ms-2">Log out</button>
-            :
-            <>
-              <button className="btn btn-primary ms-2" onClick={handleSignupModal}>Sign up</button>
-              <button className="btn btn-primary ms-2" onClick={handleLoginModal}>Log in</button>
-            </>
-          }
-          <Link to="/search" className="btn btn-primary">Search</Link>
-          <Link to="/" className="btn btn-primary">Home</Link>
-          <Link to="/private" className="btn btn-primary">Private</Link>
+          <Link to="/" className="navbar-brand">Logo</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+              {userInfo ?
+              <>
+                <li className="nav-item">
+                  <span className="nav-link cursor" onClick={handleLogOut}>Log out</span>
+                </li>
+              </>
+              :
+              <>
+                <li className="nav-item">
+                  <span className="nav-link cursor" onClick={handleSignupModal}>Sign up</span>
+                </li>
+                <li className="nav-item">
+                  <span className="nav-link cursor" onClick={handleLoginModal}>Log in</span>
+                </li>
+              </>
+              }
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Menu
+                </a>
+                <ul className="dropdown-menu bg-warning" aria-labelledby="navbarDropdown">
+                  <li><Link className="dropdown-item" to="/gamelist">Game List</Link></li>
+                  <li><Link className="dropdown-item" to="/gamepage">Game Page</Link></li>
+                  <li><Link className="dropdown-item" to="/profilepage">Profile Page</Link></li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><a className="dropdown-item text-danger " href="#" onClick={handleLogOut}>Log out</a></li>
+                </ul>
+              </li>
+
+              <li className="nav-item">
+                <Link to="/search" className="nav-link">Search</Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
       {isLoginModalOpen && <LoginModal closeModal={handleLoginModal} />}

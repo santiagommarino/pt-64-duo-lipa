@@ -24,8 +24,8 @@ export const Search = () => {
     };
 
     return (
-        <div className="container">
-            <h1 className="text-center">Search</h1>
+        <div className="search container">
+            { <h1 className="text-center">Search for the game you looking for!!</h1> /*change heading */}
             <form onSubmit={handleSearch}>
                 <div className="input-group mb-3">
                     <input type="text" className="form-control" placeholder="Search for a game" aria-label="Search for a game" aria-describedby="button-addon2" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
