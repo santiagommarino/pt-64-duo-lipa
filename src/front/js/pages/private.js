@@ -10,9 +10,6 @@ export const Private = () => {
     actions.handleFetchUserInfo();
   }, []);
 
-  console.log(store.user);
-  console.log(store.user_games);
-
   useEffect(() => {
     if (store.searchResults) {
       setSearchResults(store.searchResults);

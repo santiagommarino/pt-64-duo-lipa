@@ -34,9 +34,6 @@ export const UserProfile = () => {
     if (!user || !store.user) {
         return <div>Loading...</div>;
     }
-    console.log(user);
-    console.log(store.user);
-
 
     return (
         <div>

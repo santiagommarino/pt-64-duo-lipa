@@ -11,6 +11,7 @@ export function ReviewModal({ closeModal, game }) {
     const [like, setLike] = useState(false);
 
     async function handleReview() {
+        closeModal();
         await actions.handleReview(game.id, game.cover_id, store.user.id ,review, rating, like);
     }
 
@@ -35,7 +36,7 @@ export function ReviewModal({ closeModal, game }) {
                     </select>
                     <label htmlFor="Like">like</label>
                     <input type="checkbox" onChange={(e) => setLike(e.target.value)} value={like}/>
-                    <button onClick={() => handleReview(review, rating, like)} type="button">Submit</button>
+                    <button onClick={handleReview} type="button">Submit</button>
                 </form>
             </div>
         </div>

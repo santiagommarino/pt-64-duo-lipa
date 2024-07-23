@@ -74,7 +74,6 @@ def authenticate_user():
     user_by_email = Users.query.filter_by(email=email).first()
     user_by_username = Users.query.filter_by(username=username).first()
     user = user_by_email if user_by_email else user_by_username
-    print(user.serialize())
     if not user or not check_password_hash(user.password, password):
         return jsonify({"error": "Invalid credentials"}, 400)
     
@@ -130,7 +129,6 @@ def search():
         'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.json())
     ids = ""
     for game in response.json():
         ids += str(game['cover']) + ','
@@ -161,23 +159,19 @@ def fetch_game(game_id):
         'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-
     url = "https://api.igdb.com/v4/covers"
     payload = "fields image_id;\r\nwhere game = ("+ str(game_id) +");"
     # headers are the same as above, won't override
-    print(payload)
     response2 = requests.request("POST", url, headers=headers, data=payload)
 
     url = "https://api.igdb.com/v4/artworks"
     payload = "fields image_id;\r\nwhere game = "+ str(game_id) +";"
     # headers are the same as above, won't override
     response3 = requests.request("POST", url, headers=headers, data=payload)
-
     url = "https://api.igdb.com/v4/screenshots"
     payload = "fields image_id;\r\nwhere game = "+ str(game_id) +";"
     # headers are the same as above, won't override
     response4 = requests.request("POST", url, headers=headers, data=payload)
-
     game = response.json()[0]
     game['cover_id'] = response2.json()[0]['image_id']
     game['artworks'] = response3.json()
@@ -203,7 +197,6 @@ def review_game():
         db.session.commit()
         return jsonify(existing_review.serialize()), 200
     else:
-
         new_review = MyGames(user_id=user_id, game_id=game_id, rating=rating, review=review, liked=liked, cover_id=cover_id)
         db.session.add(new_review)
         db.session.commit()
@@ -225,7 +218,6 @@ def fetch_different_user(username):
 def follow():
     follower_id = request.json.get('follower_id')
     followed_id = request.json.get('followed_id')
-
     follower = Users.query.get(follower_id)
     followed = Users.query.get(followed_id)
 
@@ -234,21 +226,36 @@ def follow():
 
     follower.followed.append(followed)
     db.session.commit()
-
     return jsonify(follower.serialize()), 200
 
 @api.route('/unfollow', methods=['POST'])
 def unfollow():
     follower_id = request.json.get('follower_id')
     followed_id = request.json.get('followed_id')
-
     follower = Users.query.get(follower_id)
     followed = Users.query.get(followed_id)
-
     if followed not in follower.followed:
         return jsonify({'error': 'Not following this user'}), 400
-
     follower.followed.remove(followed)
     db.session.commit()
-
     return jsonify(follower.serialize()), 200
+
+@api.route('/fetch_all_reviews', methods=['GET'])
+def fetch_all_reviews():
+    reviews = MyGames.query.all()
+    headers = {
+        'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
+        'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
+        'Content-Type': 'application/json',
+        'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
+    }
+    reviewList = []
+    for review in reviews:
+        review = review.serialize()
+        review['username'] = Users.query.get(review['user_id']).username
+        game_name = requests.request("POST", "https://api.igdb.com/v4/games", 
+            headers=headers, 
+            data="fields name; where id = " + str(review['game_id']) + ";")
+        review['game_name'] = game_name.json()[0]['name']
+        reviewList.append(review)
+    return jsonify(reviewList), 200

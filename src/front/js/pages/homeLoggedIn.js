@@ -6,6 +6,7 @@ import theWitcher from "../../img/thewitcher.jpeg"
 import eldenring from "../../img/eldenring.jpg"
 import banner from "../../img/stray_banner.jpg"
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import { ReviewCard } from "../component/reviewCard.js";
 
 export const HomeLoggedIn = ({ logout }) => {
   const { store, actions } = useContext(Context);
@@ -29,6 +30,7 @@ export const HomeLoggedIn = ({ logout }) => {
       );
     }
   }
+
 
   return (
 <div className="banner text-center mb-4 mt-5">
@@ -68,118 +70,9 @@ export const HomeLoggedIn = ({ logout }) => {
       <div className="row gameList row- gx-4">
         {/*new releases*/}
       </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex">
-            <div className="col-md-4">
-              <img
-                src={rigoImageUrl}
-                className="img-fluid rounded-start"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Reviews</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <p className="card-text">
-                  <small className="text-body-secondary">
-                    Last updated 3 mins ago
-                  </small>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex">
-            <div className="col-md-4">
-              <img
-                src={rigoImageUrl}
-                className="img-fluid rounded-start"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Reviews</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <p className="card-text">
-                  <small className="text-body-secondary">
-                    Last updated 3 mins ago
-                  </small>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex">
-            <div className="col-md-4">
-              <img
-                src={rigoImageUrl}
-                className="img-fluid rounded-start"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Reviews</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <p className="card-text">
-                  <small className="text-body-secondary">
-                    Last updated 3 mins ago
-                  </small>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex">
-            <div className="col-md-4">
-              <img
-                src={rigoImageUrl}
-                className="img-fluid rounded-start"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Reviews</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <p className="card-text">
-                  <small className="text-body-secondary">
-                    Last updated 3 mins ago
-                  </small>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {store.reviews && store.reviews.map((review, index) => {
+        return <ReviewCard key={index} review={review} />;
+      }, [])}
     </div>
   );
 };
