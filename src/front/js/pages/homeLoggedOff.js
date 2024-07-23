@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import banner from "../../img/stray_banner.jpg"
+import { ReviewCard } from "../component/reviewCard.js";
 import codImage from "../../img/cod3.jpeg"
 import assasinsImage from "../../img/assasinsCreed.png"
 import mineImage from "../../img/minecraft.png"
@@ -20,18 +21,19 @@ export const HomeLoggedOff = ({ logout }) => {
 
   useEffect(() => {
     actions.handleFetchPopularGames()
-    for (let i = 0; i < 8; i++) {
-      if (store.popularGames && store.popularGames[i]) {
-        popularGameElements.push(
-          <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
-            <a href={`/game/${store.popularGames[i].id}`}>
-              <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
-            </a>
-          </div>
-        );
-      }
-    }
   }, [])
+
+  for (let i = 0; i < 8; i++) {
+    if (store.popularGames && store.popularGames[i]) {
+      popularGameElements.push(
+        <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
+          <a href={`/game/${store.popularGames[i].id}`}>
+            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
+          </a>
+        </div>
+      );
+    }
+  }
 
 
   return (
@@ -95,140 +97,9 @@ export const HomeLoggedOff = ({ logout }) => {
           </div>
         </div>
       </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex align-items-center">
-            <div className="col-md-4 p-2">
-              <img
-                src={codImage}
-                className="reviewsPicCod img-fluid rounded"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Call of Duty: Modern Warfare III</h5>
-                <p className="card-text">
-                  Very well put together game. Makes it easy for a causal player to just pick this up and play.
-                </p>
-                <div className="card-text">
-                  <small className="starOne text-body-secondary d-flex ">
-                    <p>Review by <b>Erickman25</b></p>
-                    <div className="text-warning ps-2">
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                    </div>
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex align-items-center">
-            <div className="col-md-4 p-2">
-              <img
-                src={assasinsImage}
-                className="reviewsPic img-fluid rounded"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Assassin's Creed Valhalla</h5>
-                <p className="card-text">
-                  ONE OF THE GREATEST ASSASSIN'S CREED GAMES EVER!
-                  One of the best games I have ever played (and playing still!). Definitely on my top ten list.
-                </p>
-                <div className="card-text">
-                  <small className="text-body-secondary d-flex ">
-                    <p>Review by <b>Aarom</b></p>
-                    <div className="text-warning ps-2">
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                    </div>
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex align-items-center">
-            <div className="col-md-4 p-4">
-              <img
-                src={mineImage}
-                className="reviewsPic img-fluid rounded"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Minecraft</h5>
-                <p className="card-text">
-                  Minecraft is an excellent game for young children to help encourage their creativity and problem solving There are adolescents that frequently swear, and cyberbully too.
-                </p>
-                <div className="card-text">
-                  <small className="text-body-secondary d-flex">
-                    <p>Review by <b>DKaren78</b></p>
-                    <div className="text-warning ps-2">
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-          <div className="d-flex align-items-center">
-            <div className="col-md-4 p-4">
-              <img
-                src={strayImage}
-                className="reviewsPicStr img-fluid rounded-start"
-                alt="..."
-              />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">Stray</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <div className="card-text">
-                  <small className="text-body-secondary d-flex ">
-                    <p>Review by <b>Smcrypto</b></p>
-                    <div className="text-warning ps-2">
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star"></i>
-                      <i className="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                  </small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {store.reviews && store.reviews.map((review, index) => {
+        return <ReviewCard key={index} review={review} />;
+      }, [])}
     </div>
   );
 };

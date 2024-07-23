@@ -14,6 +14,7 @@ export const Home = () => {
   useEffect(() => {
     actions.handleFetchUserInfo();
     actions.handleFetchPopularGames();
+    actions.handleFetchAllReviews();
   }, []);
 
   useEffect(() => {

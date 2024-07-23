@@ -20,7 +20,6 @@ export const GameDetails = () => {
     const response = await fetch(process.env.BACKEND_URL + 'fetch_game/' + id);
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setGame(data);
     }
 };
@@ -38,8 +37,6 @@ export const GameDetails = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(game);
-
   return (
     <div>
       <h1>{game.name}</h1>
@@ -50,12 +47,13 @@ export const GameDetails = () => {
       {isReviewModalOpen && <ReviewModal closeModal={handleReviewModal} game={game} />}
       <br></br>
       <h1>official artworks:</h1>
-      {game.artworks && game.artworks.map((artwork, index) => {
+      {game.artworks[0] && game.artworks.map((artwork, index) => {
         return <img key={index} src={`//images.igdb.com/igdb/image/upload/t_1080p/${artwork.image_id}.jpg`} className="card-img-top" alt={game.name} />;
       })}
+      {!game.artworks[0] && <img src={`//images.igdb.com/igdb/image/upload/t_1080p/${game.cover_id}.jpg`} className="card-img-top" alt={game.name} />}
       <br></br>
       <h1>screenshots:</h1>
-      {game.screenshots && game.screenshots.map((screenshot, index) => {
+      {game.screenshots[0] && game.screenshots.map((screenshot, index) => {
         return <img key={index} src={`//images.igdb.com/igdb/image/upload/t_1080p/${screenshot.image_id}.jpg`} className="card-img-top" alt={game.name} />;
       })}
     </div>

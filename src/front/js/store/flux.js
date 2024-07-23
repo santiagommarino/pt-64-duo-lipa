@@ -95,7 +95,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const response = await fetch(process.env.BACKEND_URL + 'fetch_popular_games');
 				if (response.ok) {
 					const data = await response.json();
-					console.log(data);
 					setStore({ popularGames: data });
 				} else {
 					throw new Error('Failed to fetch popular games');
@@ -114,7 +113,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					console.log(data);
 					setStore({ searchResults: data });
 				} else {
 					throw new Error('Failed to search for games');
@@ -133,13 +131,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						user_id: user_id,
 						review: review,
 						rating: rating,
-						like: like
+						like: like,
 					})
 				});
 				if (response.ok) {
 					const data = await response.json();
-					console.log(data);
-					setStore({ review: data });
 				} else {
 					throw new Error('Failed to post review');
 				}
@@ -156,7 +152,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					console.log(data);
 					setStore({ searchResults: data });
 				} else {
 					throw new Error('Failed to search for users');
@@ -198,6 +193,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await actions.handleFetchUserInfo();
 				} else {
 					throw new Error('Failed to unfollow user');
+				}
+			},
+			handleFetchAllReviews: async () => {
+				const response = await fetch(process.env.BACKEND_URL + 'fetch_all_reviews');
+				if (response.ok) {
+					const data = await response.json();
+					setStore({ reviews: data });
+				} else {
+					throw new Error('Failed to fetch all reviews');
 				}
 			},
 		},
