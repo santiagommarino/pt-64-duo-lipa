@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { act, useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -6,196 +6,95 @@ import edImage from "../../img/edring.jpeg"
 import payday from "../../img/payday.jpeg"
 import redImage from "../../img/red.jpeg"
 import gollum from "../../img/gollum.jpeg"
-// import FollowButton from "../component/followButton";
+import { useParams } from "react-router-dom";
+import { ReviewCard } from "../component/reviewCard.js";
 
 export const ProfilePage = () => {
     const { store, actions } = useContext(Context);
-    const popularGameElements = [];
+    const [searchResults, setSearchResults] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
-  
+    useEffect(() => {
+        actions.handleFetchUserInfo();
+    }, []);
 
-        for (let i = 0; i < 8; i++) {
-            if (store.popularGames && store.popularGames[i]) {
-                popularGameElements.push(
-                    <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
-                        <a href={`/game/${store.popularGames[i].id}`}>
-                            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
-                        </a>
-                    </div>
-                );
-            }
+    useEffect(() => {
+        if (store.user) {
+            actions.handleFetchUserReviews(store.user.id);
+            actions.handleFetchFollowedUsersReviews(store.user.id);
         }
+    }, [store.user]);
 
-        return (
-            <div className="container py-2">
-                <div className=" row">
-                    <div className=" col-2">
-                        <div className="profilePic picture card border border-warning" style={{}}>
-                            <img src={rigoImageUrl} className="card-img-top rounded-circle" height="200px" alt="..." />
-                        </div>
-                    </div>
-                    <div className=" col-8 ">
-                        <ul className="list-group list-group-flush ">
-                            <li className="userInfo list-group-item " placeholder="Name">hello world</li>
-                            {/* <li className="userInfo list-group-item">A second item</li>
-                        <li className="userInfo list-group-item">A third item</li> */}
-                            
-                        </ul>
-                    </div>
-                    {/* <div className=" col-2">
-                        {FollowButton}
-                    </div> */}
-                </div>
+    useEffect(() => {
+        if (store.searchResults) {
+            setSearchResults(store.searchResults);
+        }
+    }, [store.searchResults]);
 
-                <br></br>
-                {/*list of popular games. click to go to game page*/}
-                <div className="col-auto d-flex mx-auto p-4 gap-4 ">
-                    {popularGameElements}
-                </div>
-                <div className="row g-0">
-                    <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-                        <div className="d-flex align-items-center">
-                            <div className="col-md-4 p-2">
-                                <img
-                                    src={edImage}
-                                    className="reviewsPicCod img-fluid rounded"
-                                    alt="..."
-                                />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title">Elden Ring</h5>
-                                    <p className="card-text">
-                                        Elden Ring is a masterpiece, having mastered the art of showing without telling.  As a result, it is very different from other open-world games
-                                    </p>
-                                    <div className="card-text">
-                                        <small className="starOne text-body-secondary d-flex ">
-                                            <p>Review by <b>Jsmith02</b></p>
-                                            <div className="text-warning ps-2">
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star-half-stroke"></i>
-                                            </div>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    const handleSearch = e => {
+        e.preventDefault();
+        actions.searchUsers(searchTerm);
+    }
 
-                    <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-                        <div className="d-flex align-items-center">
-                            <div className="col-md-4 p-2">
-                                <img
-                                    src={redImage}
-                                    className="reviewsPic img-fluid rounded"
-                                    alt="..."
-                                />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title">Red Dead Redemption III</h5>
-                                    <p className="card-text">
-                                        The game is amazing the storyline is mind blowing so freaking good man I played it about three times and soon enough I’m going to play it again it’s just that good for me personally.
-                                    </p>
-                                    <div className="card-text">
-                                        <small className="text-body-secondary d-flex ">
-                                            <p>Review by <b>Luckyhusky</b></p>
-                                            <div className="text-warning ps-2">
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                            </div>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    if (!store.user) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div className="container py-2">
+            <div className=" row">
+                <div className=" col-2">
+                    <div className="profilePic picture card border border-warning" style={{}}>
+                        <img src={rigoImageUrl} className="card-img-top rounded-circle" height="200px" alt="..." />
                     </div>
                 </div>
-                <div className="row g-0">
-                    <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-                        <div className="d-flex align-items-center">
-                            <div className="col-md-4 p-4">
-                                <img
-                                    src={gollum}
-                                    className="reviewsPic img-fluid rounded"
-                                    alt="..."
-                                />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title">The Lord of the Rings: Gollum</h5>
-                                    <p className="card-text">
-                                        I wish I could unplay this game and burn its existence from my mind. I gave it 1 star cause I can't give it zero
-                                    </p>
-                                    <div className="card-text">
-                                        <small className="text-body-secondary d-flex">
-                                            <p>Review by <b>Incog nito</b></p>
-                                            <div className="text-warning ps-2">
-                                                <i className="fa-solid fa-star"></i>
-                                            </div>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card my-3 mx-auto" style={{ maxWidth: "540px" }}>
-                        <div className="d-flex align-items-center">
-                            <div className="col-md-4 p-4">
-                                <img
-                                    src={payday}
-                                    className="reviewsPicStr img-fluid rounded-start"
-                                    alt="..."
-                                />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title">Payday 3</h5>
-                                    <p className="card-text">
-                                        The gunplay is as fun if not better than payday 2, though some guns like the zip commando and compact 7 feel like underpowered pea shooters.
-                                    </p>
-                                    <div className="card-text">
-                                        <small className="text-body-secondary d-flex ">
-                                            <p>Review by <b>Sankipanki</b></p>
-                                            <div className="text-warning ps-2">
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star"></i>
-                                                <i className="fa-solid fa-star-half-stroke"></i>
-                                            </div>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row pt-4" >
-                    <ul className="following col-6 ">
-                        <li className="list-group-item text-center"><h4><b>Followers</b></h4></li>
-                        <li className="list-group-item"><b>Sankipanki</b></li>
-                        <li className="list-group-item"><b>Incog nito</b></li>
-                        <li className="list-group-item"><b>DKaren78</b></li>
-                        <li className="list-group-item"><b>Tugor</b></li>
-                    </ul>
-                    <ul className="follower col-6">
-                        <div className="followList">
-                            <li className="list-group-item text-center"><h4><b>Following</b></h4></li>
-                            <li className="list-group-item"><b>JamesA</b></li>
-                            <li className="list-group-item"><b>rosamaria</b></li>
-                            <li className="list-group-item"><b>Sankipanki</b></li>
-                            <li className="list-group-item"><b>Erickman25</b></li>
-                        </div>
+                <div className=" col-8 ">
+                    <ul className="list-group list-group-flush ">
+                        <li className="userInfo list-group-item " placeholder="Name">username: {store.user.username}</li>
+                        <li className="userInfo list-group-item">email: {store.user.email}</li>
+                        <li className="userInfo list-group-item">Followers: {store.user.followers.length}</li>
+                        <li className="userInfo list-group-item">Following: {store.user.followed.length}</li>
                     </ul>
                 </div>
-                <br></br>
             </div>
-        );
-    };
- 
+            {store.user_games && <h2>Your reviews:</h2>}
+            <div className="row gameList row- gx-4">
+                {store.userReviews && store.userReviews.map((game, index) => {
+                    return (
+                        <ReviewCard key={game.id} review={game} />
+                    );
+                })}
+            </div>
+            <br></br>
+            {store.followedUsersReviews && <h2>Reviews from users you follow:</h2>}
+            <div className="row gameList row- gx-4">
+                {store.followedUsersReviews && store.followedUsersReviews.map((game, index) => {
+                    return (
+                        <ReviewCard key={game.id} review={game} />
+                    );
+                })}
+            </div>
+
+            <div className="row pt-4" >
+                <ul className="following col-6 ">
+                    <li className="list-group-item text-center"><h4><b>Followers</b></h4></li>
+                    {store.user.followers.map((follower, index) => {
+                        return (
+                            <li onClick={() => window.location.href = `/user/${follower}`} className="list-group-item" key={index}><b>{follower}</b></li>
+                        );
+                    }, [])}
+                </ul>
+                <ul className="follower col-6">
+                    <li className="list-group-item text-center"><h4><b>Following</b></h4></li>
+                    {store.user.followed.map((following, index) => {
+                        return (
+                            <li onClick={() => window.location.href = `/user/${following}`} className="list-group-item" key={index}><b>{following}</b></li>
+                        );
+                    }, [])}
+                </ul>
+            </div>
+            <br></br>
+        </div>
+    );
+};
+
