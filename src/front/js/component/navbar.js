@@ -41,7 +41,7 @@ export const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-warning">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand">Logo</Link>
+          <Link to="/" className="navbar-brand">GameScout</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -69,8 +69,7 @@ export const Navbar = () => {
                 </a>
                 <ul className="dropdown-menu bg-warning" aria-labelledby="navbarDropdown">
                   <li><Link className="dropdown-item" to="/gamelist">Game List</Link></li>
-                  <li><Link className="dropdown-item" to="/gamepage">Game Page</Link></li>
-                  <li><Link className="dropdown-item" to="/profilepage">Profile Page</Link></li>
+                  {userInfo && <li><Link className="dropdown-item" to="/profilepage">Profile Page</Link></li>}
                   <li><hr className="dropdown-divider" /></li>
                   <li><a className="dropdown-item text-danger " href="#" onClick={handleLogOut}>Log out</a></li>
                 </ul>

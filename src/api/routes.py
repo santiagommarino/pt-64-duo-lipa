@@ -35,11 +35,11 @@ def create_user():
     password = request.json.get('password')
     username = request.json.get('username')
 
-    if not email:
+    if len(email) == 0:
         return jsonify({'error': 'Email is required'}, 400)
-    if not password:
+    if len(password) == 0:
         return jsonify({'error': 'Password is required'}, 400)
-    if not username:
+    if len(username) == 0:
         return jsonify({'error': 'Username is required'}, 400)
     
     if not validate_email(email):
@@ -259,3 +259,45 @@ def fetch_all_reviews():
         review['game_name'] = game_name.json()[0]['name']
         reviewList.append(review)
     return jsonify(reviewList), 200
+
+@api.route('/fetch_user_reviews/<int:user_id>', methods=['GET'])
+def fetch_user_reviews(user_id):
+    reviews = MyGames.query.filter_by(user_id=user_id).all()
+    headers = {
+        'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
+        'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
+        'Content-Type': 'application/json',
+        'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
+    }
+    reviewList = []
+    for review in reviews:
+        review = review.serialize()
+        review['username'] = Users.query.get(review['user_id']).username
+        game_name = requests.request("POST", "https://api.igdb.com/v4/games", 
+            headers=headers, 
+            data="fields name; where id = " + str(review['game_id']) + ";")
+        review['game_name'] = game_name.json()[0]['name']
+        reviewList.append(review)
+    return jsonify(reviewList), 200
+
+@api.route('/fetch_followed_users_reviews/<int:user_id>', methods=['GET'])
+def fetch_followed_reviews(user_id):
+    user = Users.query.get(user_id)
+    headers = {
+        'Client-ID': 'o2vtxnf4vau6e9hwsuhhyr2lw2btkw',
+        'Authorization': 'Bearer 2rbb0z08nr6000468k9j76f4dmrqkp',
+        'Content-Type': 'application/json',
+        'Cookie': '__cf_bm=V8lg5oo1Wce.P0qaKsEq5Pn5ooZ6ScdRlZr9BYUN.Lw-1719431149-1.0.1.1-QMXeuEauQdEr1Dm3kZ1bcgQ_jNZCO9kI9_T.u.GB1Y.__dOuimKseZdlPuJynzA97_xmnothzBGhCnj6HMgrWw'
+    }
+    followed_reviews = []
+    for followed in user.followed:
+        reviews = MyGames.query.filter_by(user_id=followed.id).all()
+        for review in reviews:
+            review = review.serialize()
+            review['username'] = followed.username
+            game_name = requests.request("POST", "https://api.igdb.com/v4/games", 
+                headers=headers, 
+                data="fields name; where id = " + str(review['game_id']) + ";")
+            review['game_name'] = game_name.json()[0]['name']
+            followed_reviews.append(review)
+    return jsonify(followed_reviews), 200

@@ -3,13 +3,34 @@ import { Context } from "../store/appContext";
 import shootinGame from "../../img/cod.png";
 import "../../styles/home.css";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
-
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export const GamePage = () => {
     const { store, actions } = useContext(Context);
+    const { id } = useParams();
+    const [game, setGame] = useState(null);
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
+
+    const handleReviewModal = () => {
+        isReviewModalOpen ? setIsReviewModalOpen(false) : setIsReviewModalOpen(true);
+    };
+
+    const fetchGameDetails = async () => {
+        const response = await fetch(process.env.BACKEND_URL + 'fetch_game/' + id);
+        if (response.ok) {
+            const data = await response.json();
+            setGame(data);
+        }
+    };
+
+    useEffect(() => {
+        actions.handleFetchUserInfo();
+        fetchGameDetails();
+    }, [id]);
 
     return (
-
         <div>
             <div className="gameBanner text-bg-dark mb-4">
                 <img src={shootinGame} className="banner-img d-block mx-auto" alt="..." style={{ width: '600px', height: '300px' }} />

@@ -30,8 +30,10 @@ export function SignupModal({ closeModal }) {
                     <input type="text" className="form-control border border-0" style={{ background:"#54B4D3"}} placeholder="Email" aria-label="Email" aria-describedby="basic-addon1"
                         onChange={(e) => setEmail(e.target.value)} value={email} />
                     <label htmlFor="password">Password:</label>
+
                     <input type="password" className="form-control border border-0" style={{ background:"#54B4D3"}} placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
                         onChange={(e) => setPassword(e.target.value)} value={password} />
+                    <p className="password-criteria">Password must contain at least 8 characters, including at least 1 UPPERCASE, 1 lowercase and 1 number</p>
                     <button className="btnModal" onClick={handleSignUp} style={{ background:"#54B4D3"}} type="button">Sign Up</button>
                 </form>
             </div>

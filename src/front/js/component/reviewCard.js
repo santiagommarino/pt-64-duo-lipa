@@ -17,7 +17,7 @@ export function ReviewCard(review) {
                         <img
                             src={`//images.igdb.com/igdb/image/upload/t_cover_big/${review['cover_id']}.jpg`}
                             className="reviewsPic img-fluid rounded"
-                            alt="..."
+                            alt="..." onClick={() => window.location.href = `/game/${review['game_id']}`}
                         />
                     </div>
                     <div className="col-md-8">
@@ -28,7 +28,7 @@ export function ReviewCard(review) {
                             </p>
                             <div className="card-text">
                                 <small className="text-body-secondary d-flex">
-                                    <p>Review by <b>{review['username']}</b></p>
+                                    {review['username'] && <p>Review by <b>{review['username']}</b></p>}
                                     <div className="text-warning ps-2">
                                         {Array.from({ length: review['rating'] }, (v, i) => <i key={i} className="fas fa-star"></i>)}
                                         {Array.from({ length: 5 - review['rating'] }, (v, i) => <i key={i} className="far fa-star"></i>)}

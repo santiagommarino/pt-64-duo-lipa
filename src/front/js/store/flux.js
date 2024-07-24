@@ -20,13 +20,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}),
 				})
 				let data = await response.json()
-				if (data) {
+				if (data && data.success === true) {
 					sessionStorage.setItem('jwtToken', data.access_token);
 					window.location.reload()
 					return true;
 				}
 				else {
-					throw new Error(data[0].error); // Throw error if unexpected response
+					alert(data[0].error);
+					throw new Error(data[0].error);
 				}
 			},
 
@@ -62,6 +63,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 							sessionStorage.setItem('jwtToken', data.access_token);
 							window.location.reload();
 						} else {
+							alert(data[0].error);
+							console.log(data[0].error);
 							throw new Error(data[0].error);
 						}
 					})
@@ -202,6 +205,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ reviews: data });
 				} else {
 					throw new Error('Failed to fetch all reviews');
+				}
+			},
+			handleFetchUserReviews: async (user_id) => {
+				const response = await fetch(process.env.BACKEND_URL + 'fetch_user_reviews/' + user_id);
+				if (response.ok) {
+					const data = await response.json();
+					setStore({ userReviews: data });
+				} else {
+					throw new Error('Failed to fetch user reviews');
+				}
+			},
+			handleFetchFollowedUsersReviews: async (user_id) => {
+				const response = await fetch(process.env.BACKEND_URL + 'fetch_followed_users_reviews/' + user_id);
+				if (response.ok) {
+					const data = await response.json();
+					setStore({ followedUsersReviews: data });
+				} else {
+					throw new Error('Failed to fetch followed users reviews');
 				}
 			},
 		},
