@@ -52,6 +52,7 @@ export const Navbar = () => {
                 <li className="nav-item">
                   <span className="nav-link cursor" onClick={handleLogOut}>Log out</span>
                 </li>
+                <li className="nav-item"><Link className="nav-link" to="/profilepage">Profile Page</Link></li>
               </>
               :
               <>
@@ -63,18 +64,6 @@ export const Navbar = () => {
                 </li>
               </>
               }
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Menu
-                </a>
-                <ul className="dropdown-menu bg-warning" aria-labelledby="navbarDropdown">
-                  <li><Link className="dropdown-item" to="/gamelist">Game List</Link></li>
-                  {userInfo && <li><Link className="dropdown-item" to="/profilepage">Profile Page</Link></li>}
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item text-danger " href="#" onClick={handleLogOut}>Log out</a></li>
-                </ul>
-              </li>
-
               <li className="nav-item">
                 <Link to="/search" className="nav-link">Search</Link>
               </li>

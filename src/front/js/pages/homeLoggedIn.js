@@ -20,10 +20,10 @@ export const HomeLoggedIn = ({ logout }) => {
     setUserInfo(storedUserInfo);
   }, []);
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     if (store.popularGames && store.popularGames[i]) {
       popularGameElements.push(
-        <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
+        <div className="card mx-auto p-1" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
           <a href={`/game/${store.popularGames[i].id}`}>
             <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
           </a>
@@ -31,20 +31,17 @@ export const HomeLoggedIn = ({ logout }) => {
       );
     }
   }
-
-
+  
   return (
-    <div className="banner text-center mb-4 mt-5">
+    <div className="banner text-center mb-4">
       <Carousel />
-      <div className="row gameList row- gx-4">
-        <div className="col-auto d-flex mx-auto p-4 gap-4 ">
+      <div className="row gameList row my-4 mx-5">
+      <h3 className="text-center mb-3">Popular Games</h3>
+        <div className="col-auto d-flex mx-auto px-4 gap-4 mx-5">
           {popularGameElements}
         </div>
       </div>
-      <br></br>
-      <div className="row gameList row- gx-4">
-        {/*new releases*/}
-      </div>
+      {store.reviews && store.reviews[0] && <h3 className="text-center my-3">Reviews By Users</h3>}
       {store.reviews && store.reviews.map((review, index) => {
         return <ReviewCard key={index} review={review} />;
       }, [])}

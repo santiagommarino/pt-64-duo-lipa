@@ -25,10 +25,10 @@ export const HomeLoggedOff = ({ logout }) => {
     actions.handleFetchPopularGames()
   }, [])
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 6; i++) {
     if (store.popularGames && store.popularGames[i]) {
       popularGameElements.push(
-        <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
+        <div className="card mx-auto p-1" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
           <a href={`/game/${store.popularGames[i].id}`}>
             <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
           </a>
@@ -36,7 +36,6 @@ export const HomeLoggedOff = ({ logout }) => {
       );
     }
   }
-
 
   return (
     <div className="banner text-center mb-4">
@@ -73,7 +72,7 @@ export const HomeLoggedOff = ({ logout }) => {
           </div>
         </div>
       </div>
-      <h3 className="text-center my-3">Reviews By Users</h3>
+      {store.reviews && store.reviews[0] && <h3 className="text-center my-3">Reviews By Users</h3>}
       {store.reviews && store.reviews.map((review, index) => {
         return <ReviewCard key={index} review={review} />;
       }, [])}
