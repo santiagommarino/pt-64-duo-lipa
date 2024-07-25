@@ -48,13 +48,27 @@ export const ProfilePage = () => {
                         <img src={rigoImageUrl} className="card-img-top rounded-circle" height="200px" alt="..." />
                     </div>
                 </div>
-                <div className=" col-8 ">
+                <div className="col-8 ">
                     <ul className="list-group list-group-flush ">
                         <li className="userInfo list-group-item " placeholder="Name">username: {store.user.username}</li>
                         <li className="userInfo list-group-item">email: {store.user.email}</li>
                         <li className="userInfo list-group-item">Followers: {store.user.followers.length}</li>
                         <li className="userInfo list-group-item">Following: {store.user.followed.length}</li>
                     </ul>
+                </div>
+                <form onSubmit={handleSearch}>
+                    <div className="input-group mb-3">
+                        <input type="text" className="form-control" placeholder="Search for users" aria-label="Search for a game" aria-describedby="button-addon2" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                    </div>
+                </form>
+                <div className="row userList gx-4">
+                    {searchResults.map((user, index) => {
+                        return (
+                            <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={index} onClick={() => window.location.href = `/user/${user.username}`}>
+                                <p>{user.username}</p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             {store.user_games && <h2>Your reviews:</h2>}

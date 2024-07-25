@@ -9,6 +9,8 @@ import mineImage from "../../img/minecraft.png"
 import strayImage from "../../img/stray.png"
 import theWitcher from "../../img/thewitcher.jpeg"
 import eldenring from "../../img/eldenring.jpg"
+import { Link } from "react-router-dom";
+import { Carousel } from "../component/carousel.js";
 
 export const HomeLoggedOff = ({ logout }) => {
   const { store, actions } = useContext(Context);
@@ -23,10 +25,10 @@ export const HomeLoggedOff = ({ logout }) => {
     actions.handleFetchPopularGames()
   }, [])
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 6; i++) {
     if (store.popularGames && store.popularGames[i]) {
       popularGameElements.push(
-        <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
+        <div className="card mx-auto p-1" style={{ marginRight: "18rem" }} key={store.popularGames[i].id}>
           <a href={`/game/${store.popularGames[i].id}`}>
             <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${store.popularGames[i].image_id}.jpg`} className="card-img-top" alt={store.popularGames[i].name} />
           </a>
@@ -35,44 +37,17 @@ export const HomeLoggedOff = ({ logout }) => {
     }
   }
 
-
   return (
-    <div className="banner text-center mb-4 mt-5">
-      <div id="carouselExampleIndicators" className="carousel slide img-fluid" data-bs-ride="true">
-        <div className="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div className="carousel-inner">
-          <div className="carousel-item active img-fluid">
-            <img src={banner} className="d-block mx-auto " alt="..." style={{ width: '70vw', height: 'auto' }} />
-          </div>
-          <div className="carousel-item img-fluid">
-            <img src={theWitcher} className="d-block mx-auto" alt="..." style={{ width: '70vw', height: 'auto' }} />
-          </div>
-          <div className="carousel-item img-fluid">
-            <img src={ eldenring } className="d-block mx-auto" alt="..." style={{ width: '70vw', height: 'auto' }} />
-          </div>
-        </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
-      </div>
-      <br></br>
-      <div className="row gameList row- gx-4">
-        {" "}
-        {/*list of popular games. click to go to game page*/}
-        <div className="col-auto d-flex mx-auto p-4 gap-4 ">
+    <div className="banner text-center mb-4">
+      <Carousel />
+      <div className="row gameList row my-4 mx-5">
+        <h3 className="text-center mb-3">Popular Games</h3>
+        <div className="col-auto d-flex mx-auto px-4 gap-4 mx-5">
           {popularGameElements}
         </div>
       </div>
-      <div className="features container text-center ">
+      <h3 className="text-center mb-3">Features</h3>
+      <div className="features container text-center">
         {/*list website features*/}
         <div className=" row row-cols-3">
           <div className="col-6 px-1 my-1" onMouseOver={() => setHover1(true)} onMouseOut={() => setHover1(false)}>
@@ -97,6 +72,7 @@ export const HomeLoggedOff = ({ logout }) => {
           </div>
         </div>
       </div>
+      {store.reviews && store.reviews[0] && <h3 className="text-center my-3">Reviews By Users</h3>}
       {store.reviews && store.reviews.map((review, index) => {
         return <ReviewCard key={index} review={review} />;
       }, [])}

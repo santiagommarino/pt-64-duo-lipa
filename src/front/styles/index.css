@@ -47,6 +47,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
     transition-property: box-shadow, transform;
     border: none;
 }
@@ -78,4 +79,20 @@ body {
     /* height: 100px;
     width: 100px; */
     /* background-image: url(./img/library.jpeg); */
+}
+
+html, body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+.navbar{
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    z-index: 1000;
 }
