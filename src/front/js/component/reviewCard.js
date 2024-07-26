@@ -7,7 +7,12 @@ import { Context } from '../store/appContext';
 
 export function ReviewCard(review) {
     const { store, actions } = useContext(Context);
-    review = review.review;
+    if (review.game){
+        review = review.game;
+    }
+    else{
+        review = review.review;
+    }
 
     return (
         <div className="row g-0">
@@ -28,7 +33,7 @@ export function ReviewCard(review) {
                             </p>
                             <div className="card-text">
                                 <small className="text-body-secondary d-flex">
-                                    {review['username'] && <p>Review by <b>{review['username']}</b></p>}
+                                    {review['username'] && <p onClick={() => window.location.href = `/user/${review['username']}`}>Review by <b>{review['username']}</b></p>}
                                     <div className="text-warning ps-2">
                                         {Array.from({ length: review['rating'] }, (v, i) => <i key={i} className="fas fa-star"></i>)}
                                         {Array.from({ length: 5 - review['rating'] }, (v, i) => <i key={i} className="far fa-star"></i>)}

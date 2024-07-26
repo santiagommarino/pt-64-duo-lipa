@@ -2,10 +2,6 @@ import React, { act, useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import edImage from "../../img/edring.jpeg"
-import payday from "../../img/payday.jpeg"
-import redImage from "../../img/red.jpeg"
-import gollum from "../../img/gollum.jpeg"
 import { useParams } from "react-router-dom";
 import { ReviewCard } from "../component/reviewCard.js";
 

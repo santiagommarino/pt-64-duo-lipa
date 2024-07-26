@@ -36,7 +36,8 @@ const Layout = () => {
                         <Route element={<GameList />} path="/gamelist" />
                         <Route element={<GamePage />} path="/gamepage" />
                         <Route element={<ProfilePage />} path="/profilepage" />
-                        <Route element={<GameDetails />}  path="/game/:id" />
+                        {/* <Route element={<GameDetails />}  path="/game/:id" /> */}
+                        <Route element={<GamePage />} path="/game/:id" />
                         <Route element={<Search />} path="/search" />
                         <Route element={<UserProfile />} path="/user/:username" />
                     </Routes>

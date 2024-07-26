@@ -26,6 +26,9 @@ export const GameDetails = () => {
 
   useEffect(() => {
     actions.handleFetchUserInfo();
+  }, []);
+
+  useEffect(() => {
     fetchGameDetails();
   }, [id]);
 
