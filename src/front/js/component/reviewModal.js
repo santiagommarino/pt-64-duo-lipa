@@ -13,6 +13,7 @@ export function ReviewModal({ closeModal, game }) {
     async function handleReview() {
         closeModal();
         await actions.handleReview(game.id, game.cover_id, store.user.id ,review, rating, like);
+        window.location.reload();
     }
 
     return (

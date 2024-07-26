@@ -3,6 +3,7 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useContext } from 'react';
+import { ReviewCard } from "../component/reviewCard.js";
 
 export const UserProfile = () => {
     const { store, actions } = useContext(Context);
@@ -31,9 +32,11 @@ export const UserProfile = () => {
         actions.handleUnfollow(store.user.id, user.id)
     }
 
-    if (!user || !store.user) {
+    if (!user || !store.user || !userGames) {
         return <div>Loading...</div>;
     }
+
+    console.log(userGames);
 
     return (
         <div>
@@ -47,20 +50,11 @@ export const UserProfile = () => {
                 <p>Not Following</p>
                 <button className='btn btn-primary' onClick={handleFollow}>Follow</button>
             </>}
-
-            <p>{user.email}</p>
             <h1>{user.username}'s reviews:</h1>
             <div className="row gameList row- gx-4">
                 {userGames && userGames.map((game, index) => {
                     return (
-                        <div className="card mx-auto p-2" style={{ marginRight: "18rem" }} key={game.id}>
-                            <a href={`/game/${game.game_id}`}>
-                                <img src={`//images.igdb.com/igdb/image/upload/t_1080p/${game.cover_id}.jpg`} className="card-img-top" alt={game.name} />
-                            </a>
-                            <p>review: {game.review}</p>
-                            <p>rating: {game.rating}</p>
-                            <p>like: {game.like}</p>
-                        </div>
+                        <ReviewCard key={index} game={game} />
                     );
                 })}
             </div>
